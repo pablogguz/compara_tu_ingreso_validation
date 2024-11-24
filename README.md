@@ -25,7 +25,7 @@ The methodology combines several statistical approaches to estimate income distr
 
 | File Name | Description | Input Data Required | Output |
 |-----------|-------------|---------------------|---------|
-| `1. predict_gini_ml.r` | Implements ML models to predict missing Gini coefficients | ADRH tract data, demographic variables | `gini_predicted.fst` |
+| `1. predict_gini_ml.r` | Implements ML model to predict missing Gini coefficients | ADRH tract data, demographic variables | `gini_predicted.fst` |
 | `2. prep_lognormal.r` | Prepares income distributions using log-normal mixture | ADRH data, predicted Gini | National and provincial distributions |
 | `3a. mun_stats.r` | Calculates municipal statistics | ADRH municipal data, Census data | Municipal summary statistics |
 | `3b. tract_stats.r` | Processes tract-level statistics | ADRH tract data, Census tract data | Tract-level statistics |
