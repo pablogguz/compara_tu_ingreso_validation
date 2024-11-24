@@ -10,7 +10,8 @@ packages_to_load <- c(
     "data.table",
     "ineAtlas",
     "Hmisc",
-    "fst"
+    "fst",
+    "sf"
 )
 
 package.check <- lapply(
@@ -23,20 +24,19 @@ package.check <- lapply(
 )
 
 lapply(packages_to_load, require, character=T)
-source("_create_comparison_plot.R")
 
 #-------------------------------------------------------------------
 
 # ------------------------------ Atlas ----------------------------- #
-atlas_income <- get_atlas(
-    "income",
-    level = "tract"
+atlas_income <- merge(
+    setDT(ineAtlas::get_atlas("income", "tract")),
+    setDT(ineAtlas::get_atlas("demographics", "tract"))
 ) %>%
     filter(year == 2022) %>%
     select(
         tract_code, mun_code, prov_code,
         prov_name, mun_name, net_income_equiv, 
-        net_income_pc
+        net_income_pc, population
     )
 
 # Check municipalities in which all tracts have missing income data
@@ -103,7 +103,7 @@ processed_data <- atlas_income %>%
     ) %>%
     mutate(
         # Calculate national ratio for imputation
-        ratio = mean(net_income_equiv / net_income_pc, na.rm = TRUE),
+        ratio = weighted.mean(net_income_equiv / net_income_pc, w = population, na.rm = TRUE),
         # Impute missing values
         net_income_equiv = if_else(
             is.na(net_income_equiv),

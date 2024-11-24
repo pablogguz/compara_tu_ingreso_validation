@@ -23,29 +23,31 @@ package.check <- lapply(
 )
 
 lapply(packages_to_load, require, character=T)
-source("_create_comparison_plot.R")
 
 #-------------------------------------------------------------------
 
-atlas_data <- get_atlas(
+# ------------------------------ Atlas ----------------------------- #
+atlas_income <- merge(
+    setDT(ineAtlas::get_atlas("income", "municipality")),
+    setDT(ineAtlas::get_atlas("demographics", "municipality"))
+) %>%
+    filter(year == 2022) %>%
+    select(
+        mun_code, prov_code,
+        prov_name, mun_name, net_income_equiv, 
+        net_income_pc, population
+    )
+
+atlas_income_sources <- get_atlas(
     "income_sources",
     level = "municipality"
 ) %>%
     filter(year == 2021) %>%
     select(mun_code, wage, pension)
 
-atlas_income <- get_atlas(
-    "income",
-    level = "municipality"
-) %>%
-    filter(year == 2022) %>%
-    select(mun_code, net_income_equiv, net_income_pc)
+# ---------------------------- Census ------------------------------- #
 
-# Get municipality level data
-mun_data <- get_census(level = "municipality")
-
-# Base processing that applies to all indicators
-processed_data <- mun_data %>%
+mun_data_census <- get_census(level = "municipality") %>%
     mutate(
         # Calculate derived population metrics
         pop_16_64 = total_pop * pct_16to64,
@@ -58,30 +60,35 @@ processed_data <- mun_data %>%
         # recalculate emp. rate as % of pop. 16-64
         employment_rate = total_employed / pop_16_64
     ) %>%
-    left_join(atlas_data) %>%
-    left_join(atlas_income) %>%
+    select(
+        mun_code, total_pop, total_employed, employment_rate,
+        pct_foreign_born, pct_higher_ed_completed, unemployment_rate,
+        pct_female, pct_single
+    )
+
+# ------------------------------ Combine ----------------------------- #
+# Base processing that applies to all indicators
+processed_data <- atlas_income %>%
+    left_join(atlas_income_sources) %>%
+    left_join(mun_data_census) %>%
     mutate(
         # calculate avg. gross salary
         total_salaries = wage * total_pop,
         avg_salary = round(total_salaries / total_employed, 0),
-        # calculate avg. gross pension
-        total_pensions = pension * total_pop,
-        avg_pension = total_pensions / total_pensioners
     ) %>%
     mutate(
         # Convert percentages to 0-100 scale
         across(
             c(
-                pct_higher_ed_completed, pct_foreign_born, pct_single,
-                pct_16to64, pct_retirement_pension, unemployment_rate,
-                employment_rate, pct_female
+                pct_higher_ed_completed, pct_foreign_born, pct_single, 
+                unemployment_rate, employment_rate, pct_female
             ),
             ~ . * 100
         )
     ) %>%
     mutate(
         # Calculate national ratio for imputation
-        ratio = mean(net_income_equiv / net_income_pc, na.rm = TRUE),
+        ratio = weighted.mean(net_income_equiv / net_income_pc, w = population, na.rm = TRUE),
         # Impute missing values
         net_income_equiv = if_else(
             is.na(net_income_equiv),
@@ -114,9 +121,11 @@ processed_data <- mun_data %>%
     select(
         mun_code, prov_code, 
         avg_salary, net_income_equiv, employment_rate,
-        pct_foreign_born, workers_per_pensioner, pct_higher_ed_completed,
+        pct_foreign_born, pct_higher_ed_completed,
         ends_with("is_imputed")
     )
+
+# ------------------------------ Save ----------------------------- #
 
 # Calculate number of imputations per municipality
 imputation_stats <- processed_data %>%

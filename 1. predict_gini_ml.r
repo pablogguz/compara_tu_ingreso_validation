@@ -60,8 +60,8 @@ data_clean <- atlas_all %>%
     ) %>%
     group_by(prov_code) %>%
     mutate(
-        # Calculate national ratio
-        ratio = mean(net_income_equiv/net_income_pc, na.rm = TRUE),
+        # Calculate provincial ratio
+        ratio = weighted.mean(net_income_equiv/net_income_pc, w = population, na.rm = TRUE),
         # Impute net_income_equiv where missing
         net_income_equiv = if_else(
             is.na(net_income_equiv) & !is.na(net_income_pc),

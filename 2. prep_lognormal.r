@@ -45,8 +45,8 @@ atlas_all <- atlas_all %>%
     mutate(is_imputed = as.integer(is.na(net_income_equiv) & !is.na(net_income_pc))) %>%
     group_by(prov_code) %>%
     mutate(
-        # Calculate national ratio for imputation
-        ratio = mean(net_income_equiv / net_income_pc, na.rm = TRUE),
+        # Calculate provincial ratio for imputation
+        ratio = weighted.mean(net_income_equiv / net_income_pc, w = population, na.rm = TRUE),
         # Impute missing values
         net_income_equiv = if_else(
             is.na(net_income_equiv),
