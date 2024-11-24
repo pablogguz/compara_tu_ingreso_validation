@@ -8,10 +8,9 @@
 
 | **File Name**              | **Description**                                                                                           |
 |-----------------------------|-----------------------------------------------------------------------------------------------------------|
-| `0. calculate_lognormal.r` | Contains functions to calculate lognormal distributions for income data.                                  |
-| `1. predict_gini_ml.r`     | Implements machine learning models to predict Gini coefficients based on input features.                  |
-| `2. prep_lognormal.r`      | Prepares income data for further analysis by applying transformations based on lognormal assumptions.     |
-| `3a. mun_stats.r`          | Generates municipal-level summary statistics for validation and comparison purposes.                      |
-| `3b. tract_stats.r`        | Generates tract-level summary statistics for validation and comparison purposes.                          |
-| `_create_comparison_plot.r`| Creates visualizations to compare predicted and actual metrics, aiding in validation.                     |
-| `README.md`                | Documentation file describing the repository structure, purpose, and usage.                              |
+| `0. calculate_lognormal.r` | Contains functions to calculate log-normal distributions for income data                                  |
+| `1. predict_gini_ml.r`     | Implements an ML model to predict Gini coefficients based on input features                  |
+| `2. prep_lognormal.r`      | Prepares income data for further analysis by applying transformations based on log-normal assumptions     |
+| `3a. mun_stats.r`          | Generates municipal-level summary statistics       |
+| `3b. tract_stats.r`        | Generates tract-level summary statistics                          |
+| `_create_comparison_plot.r`| Creates visualizations to compare predicted and actual metrics                    |
