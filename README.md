@@ -9,8 +9,8 @@
 The methodology combines several statistical approaches to estimate income distributions at various geographical levels:
 
 1. **Data Sources**
-   - _Atlas de Distribución de Renta de los Hogares_ ([ADRH](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608)) from INE at the municipality and census-tract levels
-   - [Census 2021](https://www.ine.es/censos2021/) data at the municipality and census-tract levels
+   - _Atlas de Distribución de Renta de los Hogares_ ([ADRH](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608)) from INE at the municipality and census tract levels
+   - [Census 2021](https://www.ine.es/censos2021/) data at the municipality and census tract levels
 
 2. **Core Assumptions**
    - Log-normal distribution of income within census tracts
