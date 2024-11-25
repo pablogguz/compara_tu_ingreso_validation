@@ -45,7 +45,7 @@ This do-file: generates summary stats
         ttext(38000 10000 "β = `: display %6.3f `beta''") ///
         bycolors(midblue%50) polyregplotopt(lcolor(midblue%50) lwidth(0.7)) ///
         dotsplotopt(msize(2))
-    graph export "$output/median_income_equiv.png", width(2000) replace
+    graph export "$output/binned_scatter_median.png", width(2000) replace
 
 **# Regression and chart for P80/P20
     reghdfe expected_p80p20 p80p20 [aw=population], noabsorb vce(cl prov_code)
@@ -62,7 +62,7 @@ This do-file: generates summary stats
         ttext(3.3 2.2 "β = `: display %6.3f `beta''") ///
         bycolors(midblue%50) polyregplotopt(lcolor(midblue%50) lwidth(0.7)) ///
         dotsplotopt(msize(2))
-    graph export "$output/binned_scatter_median.png", width(2000) replace
+    graph export "$output/binned_scatter_p80p20.png", width(2000) replace
 
 
 

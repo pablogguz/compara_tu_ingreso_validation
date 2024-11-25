@@ -78,6 +78,30 @@ check_data <- known_tracts %>%
 tosave <- check_data %>% select(tract_code, expected_p80p20, expected_median)
 write_dta(check_data, paste0("data-raw/expected.dta"))
 
+# # P80/P20 ratio:
+# p80p20_plot <- create_comparison_plot(
+#     data = check_data,
+#     expected_var = "expected_p80p20",
+#     observed_var = "p80p20",
+#     rel_diff_var = "rel_diff_p8p20",  # Using pre-calculated relative difference
+#     title = "",
+#     x_label = "Observed P80/P20 ratio",
+#     y_label = "Expected P80/P20 from log-normality assumption",
+#     output_path = "output/binned_scatter_p80p20.png"
+# )
+
+# # Median:
+# median_plot <- create_comparison_plot(
+#     data = check_data,
+#     expected_var = "expected_median",
+#     observed_var = "median_income_equiv",
+#     rel_diff_var = "rel_diff_median",
+#     x_label = "Observed median income",
+#     title = "",
+#     y_label = "Expected median from log-normality assumption",
+#     output_path = "output/binned_scatter_median.png"
+# )
+
 # ------------------------------- Calculate individual distribution -------------------------------
 # Get lognormal parameters for each tract
 known_tracts <- known_tracts %>%
