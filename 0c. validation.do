@@ -27,12 +27,15 @@ This do-file: generates summary stats
     lab var median_income_equiv "Observed median income per equivalent adult"
     lab var p80p20 "Observed P80/P20 ratio"
 
+**# Calculate mean relative differences 
+    su rel_diff_median rel_diff_p8p20 [aw=population], d
+    
 **# Regression and chart for median income
-    reghdfe median_income_equiv expected_median [aw=population], noabsorb vce(cl prov_code)
+    reghdfe expected_median median_income_equiv  [aw=population], noabsorb vce(cl prov_code)
 
     // Extract R² and beta
     local r2 = e(r2)
-    local beta = _b[expected_median]
+    local beta = _b[median_income_equiv]
 
     // Generate binsreg chart
     binsreg expected_median median_income_equiv [aw=population], ///
@@ -45,11 +48,11 @@ This do-file: generates summary stats
     graph export "$output/median_income_equiv.png", width(2000) replace
 
 **# Regression and chart for P80/P20
-    reghdfe p80p20 expected_p80p20 [aw=population], noabsorb vce(cl prov_code)
+    reghdfe expected_p80p20 p80p20 [aw=population], noabsorb vce(cl prov_code)
 
     // Extract R² and beta
     local r2 = e(r2)
-    local beta = _b[expected_p80p20]
+    local beta = _b[p80p20]
 
     // Generate binsreg chart
     binsreg expected_p80p20 p80p20 [aw=population], ///
