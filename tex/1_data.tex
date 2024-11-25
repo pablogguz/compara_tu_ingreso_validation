@@ -8,3 +8,23 @@ Below the municipal level, finer geographic divisions provide additional granula
 Income data in the ADRH is derived from tax declarations submitted to the Spanish tax authorities, including the \textit{Agencia Estatal de Administración Tributaria} (AEAT) and the Foral tax authorities.\footnote{The latter operate in regions with special fiscal regimes, such as the Basque Country and Navarre.} These tax records provide detailed information on income from various sources, including wages, pensions, unemployment benefits, and other forms of revenue subject to the \text{Impuesto sobre la Renta de las Personas Físicas} (IRPF), Spain's personal income tax system. The dataset excludes non-resident income and focuses exclusively on individuals considered fiscal residents within the territory.
 
 Demographic data in the ADRH is constructed from the \textit{Fichero Precensal de Población} (FPC), a comprehensive register derived from the municipal register (\textit{Padrón}) and other administrative sources. The FPC forms the basis of Spain’s population census and ensures alignment between demographic and income data. The temporal reference for income data corresponds to the calendar year, while demographic data is anchored to the population as registered on January 1 of the following year. Individuals residing in collective establishments, such as nursing homes, hospitals, or military barracks, are excluded from the dataset.
+
+\paragraph{Summary statisticts}.
+
+
+\begin{table}[H]
+\centering
+\resizebox{0.8\textwidth}{!}{% 
+\begin{threeparttable}[H]
+\onehalfspacing
+\centering
+\captionsetup{justification=centering} 
+\caption{Covid impact}
+\input{output/summary_stats}
+\begin{tablenotes}[para,flushleft]
+\footnotesize 
+\textbf{Notes}: all statistics are unweighted and calculated at the census-tract level. Spanish Statistical Office (INE) Household Income Distribution Atlas and author's calculations.
+\end{tablenotes}
+\end{threeparttable}
+}
+\end{table}
