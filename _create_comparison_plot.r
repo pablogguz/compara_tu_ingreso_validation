@@ -1,6 +1,6 @@
 create_comparison_plot <- function(data, expected_var, observed_var, 
                                  rel_diff_var = NULL, # New parameter for rel_diff
-                                 title, y_label, x_label = "Observed Value",
+                                 title, y_label, x_label = "Observed value",
                                  nbins = 25, font_family = "Roboto",
                                  output_path = NULL) {
     
@@ -38,23 +38,39 @@ create_comparison_plot <- function(data, expected_var, observed_var,
     cat(sprintf("Mean Absolute Difference: %.3f\n", mean_diff))
     cat(sprintf("Mean Relative Difference: %.1f%%\n", mean_rel_diff))
     
+    # Stats text for inside plot
+    stats_text <- sprintf(
+        "β = %.3f\nR² = %.3f\nMean rel. diff. = %.1f%%",
+        coef, r2, mean_rel_diff
+    )
+    
     # Customize plot
     result$bins_plot <- result$bins_plot +
+        geom_point(size = 3) +     # Makes dots bigger
+        geom_line(linewidth = 2) + # Makes line thicker
         labs(
             title = title,
-            subtitle = sprintf(
-                "β = %.3f, R² = %.3f\nMean Absolute Difference: %.3f, Mean Relative Difference: %.1f%%",
-                coef, r2, mean_diff, mean_rel_diff
-            ),
             x = x_label,
             y = y_label
         ) +
+        # Add stats annotation
+        annotate(
+            "text",
+            x = min(data[[observed_var]], na.rm = TRUE),
+            y = 0.9*max(data[[expected_var]], na.rm = TRUE),
+            label = stats_text,
+            hjust = 0,
+            vjust = 1,
+            size = 5,
+            family = font_family
+        ) +
         theme_minimal() +
         theme(
-            text = element_text(family = font_family),
-            plot.title = element_text(face = "bold", size = 14),
-            plot.subtitle = element_text(size = 10, color = "#666666"),
-            axis.title = element_text(size = 12)
+            text = element_text(family = font_family, size = 18),
+            plot.title = element_text(face = "bold", size = 18),
+            axis.title = element_text(size = 18),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank()
         )
     
     # Save plot if output path is provided
