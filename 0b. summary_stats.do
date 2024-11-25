@@ -36,10 +36,10 @@ This do-file: generates summary stats
 		file write fh _n  "\begin{tabular}{@{}lccccc@{}}"
 		file write fh _n "\toprule" 
 		file write fh _n  "" " " " & " "(1)" " & " "(2)" " & " "(3)" " & " " (4)" " & " " (5) " "\\"
-		file write fh _n  "" " " "& " "Min" " & " "Max" " & " "Mean" " & " "SD" " & " "% missing" "\\"
+		file write fh _n  "" " " "& " "Min" " & " "Max" " & " "Mean" " & " "SD" " & " "\% missing" "\\"
 		file write fh _n "\midrule" 
 		
-        file write fh _n  "\qquad \textit{Income distribution:} \\" 
+        file write fh _n  "\qquad \textit{Income distribution} \\" 
 
             foreach var in net_income_pc net_income_equiv gini {
                 su `var', d
@@ -55,7 +55,7 @@ This do-file: generates summary stats
                 file write fh _n `"`: var label `var''"'  " & " %9.2fc (`min') " & " %9.2fc (`max') " & " %9.2fc (`mean') " & " %9.2fc (`sd') " & " %9.2fc (`miss')  "\\"
             }
 
-        file write fh _n  "\qquad \textit{Demographics:} \\" 
+        file write fh _n  "\qquad \textit{Demographics} \\" 
 
             foreach var in population dependency_ratio mean_age pct_single_hh {
                 su `var', d
@@ -65,7 +65,7 @@ This do-file: generates summary stats
                 local max = r(max)
 
                 count if `var' == .
-                local miss = r(N)/_N 
+                local miss = 100*r(N)/_N 
                 di `miss'
 
                 file write fh _n `"`: var label `var''"'  " & " %9.2fc (`min') " & " %9.2fc (`max') " & " %9.2fc (`mean') " & " %9.2fc (`sd') " & " %9.2fc (`miss')  "\\"
