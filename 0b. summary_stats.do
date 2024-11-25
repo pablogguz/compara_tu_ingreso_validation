@@ -49,7 +49,7 @@ This do-file: generates summary stats
                 local max = r(max)
 
                 count if `var' == .
-                local miss = r(N)/_N 
+                local miss = 100*r(N)/_N 
                 di `miss'
 
                 file write fh _n `"`: var label `var''"'  " & " %9.2fc (`min') " & " %9.2fc (`max') " & " %9.2fc (`mean') " & " %9.2fc (`sd') " & " %9.2fc (`miss')  "\\"
