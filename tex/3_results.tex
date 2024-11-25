@@ -10,12 +10,11 @@ I begin by validating the log-normality assumption at the tract level. Figure 1 
 \includegraphics[width=0.9\textwidth]{output/binned_scatter_median.png}
 \end{center}
 \begin{fignotes}
-\textbf{Notes:} This figure shows a binned scatter plot comparing observed median income with predicted values under the log-normal assumption for each census tract. Observations are grouped into 25 equal-sized bins. The solid line shows the linear fit. Vertical bars represent 95\% confidence intervals for each bin mean.
+\textbf{Notes:} This figure shows a binned scatter plot comparing observed median income with predicted values under the log-normal assumption for each census tract. 
 \end{fignotes}
 \end{figure}
 
-Figure 2 shows the relationship for the P80/P20 ratio. The binned regression yields a slope coefficient of 0.725 ($R^2$ = 0.773), with predicted values deviating from observed ones by 5.4\% on average. The coefficient below unity suggests that the log-normal distribution slightly underestimates inequality in the tails, consistent with the fact that actual income distributions tend to have heavier tails.
-
+Figure 2 shows the relationship for the P80/P20 ratio. The binned regression yields a slope coefficient of 1.09 ($R^2$ = 0.82), with predicted values deviating from observed ones by 5.0\% on average. The coefficient below unity suggests that the log-normal distribution slightly underestimates inequality in the tails, consistent with the fact that actual income distributions tend to have heavier tails.
 
 \begin{figure}[H]
 \begin{center}
@@ -25,6 +24,6 @@ Figure 2 shows the relationship for the P80/P20 ratio. The binned regression yie
 \includegraphics[width=0.9\textwidth]{output/binned_scatter_p80p20.png}
 \end{center}
 \begin{fignotes}
-\textbf{Notes:} This figure shows a binned scatter plot comparing observed P80/P20 ratios with predicted values under the log-normal assumption for each census tract. Observations are grouped into 25 equal-sized bins. The solid line shows the linear fit. Vertical bars represent 95\% confidence intervals for each bin mean.
+\textbf{Notes:} This figure shows a binned scatter plot comparing observed P80/P20 ratios with predicted values under the log-normal assumption for each census tract.
 \end{fignotes}
 \end{figure}
