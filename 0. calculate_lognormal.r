@@ -11,7 +11,8 @@ packages_to_load <- c(
     "data.table",
     "ineAtlas",
     "binsreg",
-    "extrafont"
+    "extrafont",
+    "haven"
 )
 
 package.check <- lapply(
@@ -47,6 +48,9 @@ atlas_all <- merge(atlas_all, gini, by = "tract_code")
 missing_percent <- atlas_all %>%
     summarise(across(everything(), ~ mean(is.na(.)) * 100))
 print(missing_percent)
+
+# Save file for summary stats 
+write_dta(atlas_all, paste0("data-raw/atlas_all.dta"))
 
 # Keep only tracts where we have the Gini available
 known_tracts <- atlas_all %>%
