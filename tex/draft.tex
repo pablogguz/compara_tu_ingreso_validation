@@ -1,0 +1,73 @@
+\documentclass[letterpaper,11pt,leqno]{article}
+\usepackage{paper}
+\usepackage{natbib}
+\bibliographystyle{bibliography}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{threeparttable}
+\usepackage{natbib}
+\usepackage{listings}
+\usepackage{rotating}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{makecell}
+\usepackage{booktabs}
+
+\definecolor{customblue}{rgb}{0,0.337,0.702}
+
+\hypersetup{
+    colorlinks   = true,
+    citecolor    = customblue,
+    linkcolor    = customblue,
+    urlcolor     = customblue
+}
+
+\def\dotfill#1{\cleaders\hbox to #1{.}\hfill}
+\makeatletter
+\def\myrulefill{\leavevmode\leaders\hrule height .7ex width 1ex depth -0.6ex\hfill\kern\z@}
+\makeatother
+
+\begin{document}
+
+\title{\Large \textsc{A simple and adaptable method to estimate income distributions in Spain}}
+
+\author{\href{https://pablogguz.github.io/}{\large{Pablo García-Guzmán}} \\ \normalsize{EBRD}}
+
+\date{\normalsize \today \\ \textcolor{red}{Preliminary draft -- do not cite or circulate}}
+
+\maketitle
+\begin{abstract}
+\onehalfspacing
+This methodology note develops a transparent and simple framework to estimate income distributions at granular geographical levels in Spain. Specifically, I leverage administrative tax records and demographic data at the census tract-level -- small areas encompassing 1,000 to 2,500 residents -- to reconstruct local income distributions assuming log-normality. National and regional income distributions are subsequently derived as population-weighted mixtures of these tract-level distributions. This approach leverages well-documented regularities in how incomes are distributed within neighborhoods, and the resulting estimates closely match observed income percentiles in validation tests. I implement this framework in \href{https://comparatuingreso.es/}{comparatuingreso.es}, a publicly available web platform that enables Spanish households to calculate their relative position within the income distribution. While the focus is on Spain, this approach can be readily adapted to other countries with comparable administrative data available.
+\end{abstract}
+
+\thispagestyle{empty}
+
+\newpage
+
+\setcounter{page}{1}
+
+\section{Introduction}
+
+The rest of this note is organized as follows. Section 2 describes the data sources, their coverage, and scope. Section 3 outlines the methodology, including the modeling of local income distributions and their aggregation. Section 4 presents validation results, and Section 5 discusses potential extensions and applications of the framework to other contexts.
+
+\section{Data}
+
+\input{tex/1_data}
+
+\section{Methodology}
+
+\input{tex/2_method}
+
+\section{Results}
+
+
+
+%Bibliography
+\newpage
+\singlespacing
+\bibliographystyle{authordate3}
+\bibliography{bib.bib}
+
+\end{document}
