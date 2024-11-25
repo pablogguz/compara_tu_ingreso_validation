@@ -56,7 +56,7 @@ where $q_p$ is the $p^{th}$ percentile and $F(\cdot)$ is the cumulative distribu
 
 This approach has several advantages. First, it respects the theoretical properties of income distributions at local levels where populations are more homogeneous. Second, it preserves tract-level moments while allowing for heterogeneity across tracts. Third, it provides a flexible framework for calculating any distributional statistic of interest.
 
-\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.2\% of the sample), I estimate them using machine learning methods. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, and province fixeed effects. Model performance is validated using a 5-fold cross-validation procedure. The XGBoost model is trained using default hyperparameters without grid search or additional tuning. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model.
+\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.2\% of the sample), I estimate them using machine learning methods. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure. The XGBoost model is trained using default hyperparameters without grid search or additional tuning. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model.
 
 \paragraph{Validation} To validate the log-normality assumption at the tract level, I compare observed distributional statistics with their theoretical counterparts under log-normality. For each tract $j$, I first recover the parameters of the theoretical log-normal distribution $(\nu_j, \sigma_j)$ using the observed mean income and Gini coefficient. Then, I calculate two key predicted statistics: the P80/P20 ratio and the median income. Under log-normality, these are given by:
 
@@ -71,6 +71,7 @@ This approach has several advantages. First, it respects the theoretical propert
 To assess the fit, I estimate binned regressions of the form:
 
 \begin{equation}
-y_j^{\text{predicted}} = \alpha + \beta y_j^{\text{observed}} + \epsilon_j
+\hat{y}_j = \alpha + \beta y_j + \epsilon_j
 \end{equation}
 
+where $\hat{y}_j$ is the predicted value under log-normality and $y_j$ is the observed value.
