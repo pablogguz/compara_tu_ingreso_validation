@@ -73,7 +73,8 @@ This do-file: generates summary stats
 
         distinct tract_code
 
-        file write fh _n  "\textit{No. of tracts}"    " & " %15.0fc (`r(ndistinct)')  " \\"
+         file write fh _n "\midrule"
+        file write fh _n  "No. of tracts"    " & " %15.0fc (`r(ndistinct)')  " \\"
         file write fh _n "\midrule" 
 
         file write fh _n "\end{tabular}"
