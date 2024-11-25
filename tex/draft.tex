@@ -23,6 +23,10 @@
     urlcolor     = customblue
 }
 
+\newenvironment{fignotes}{\setstretch{1.2}\scriptsize}
+
+\newenvironment{fignotes2}{\begin{quote}\setstretch{1.2}\scriptsize}{\end{quote}}
+
 \def\dotfill#1{\cleaders\hbox to #1{.}\hfill}
 \makeatletter
 \def\myrulefill{\leavevmode\leaders\hrule height .7ex width 1ex depth -0.6ex\hfill\kern\z@}
@@ -64,7 +68,7 @@ The rest of this note is organized as follows. Section \ref{sec:data} describes 
 
 \section{Results}
 
-
+\input{tex/3_results}
 
 %Bibliography
 \newpage
