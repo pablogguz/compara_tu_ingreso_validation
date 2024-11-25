@@ -9,8 +9,7 @@ Income data in the ADRH is derived from tax declarations submitted to the Spanis
 
 Demographic data in the ADRH is constructed from the \textit{Fichero Precensal de Población} (FPC), a comprehensive register derived from the municipal register (\textit{Padrón}) and other administrative sources. The FPC forms the basis of Spain’s population census and ensures alignment between demographic and income data. The temporal reference for income data corresponds to the calendar year, while demographic data is anchored to the population as registered on January 1 of the following year. Individuals residing in collective establishments, such as nursing homes, hospitals, or military barracks, are excluded from the dataset.
 
-\paragraph{Summary statisticts}.
-
+\paragraph{Summary statistics} The sample consists of 36,982 census tracts covering all of Spain in 2022. The average tract has 1,303 residents, though size varies considerably (SD = 663). Average net income per equivalent adult is €20,798, about 48\% higher than per capita income (€14,030). Within-tract inequality, measured by the Gini coefficient, averages 29.0 points across tracts. Missing rates are below 2\% for most variables, and rise slightly above 5\% for equivalized income and the Gini coefficient. Demographically, the average tract has a dependency ratio of 0.63, a mean age of 45.4 years, and 30.5\% single-person households.
 
 \begin{table}[H]
 \centering
@@ -19,7 +18,7 @@ Demographic data in the ADRH is constructed from the \textit{Fichero Precensal d
 \onehalfspacing
 \centering
 \captionsetup{justification=centering} 
-\caption{Covid impact}
+\caption{Summary statistics}
 \input{output/summary_stats}
 \begin{tablenotes}[para,flushleft]
 \footnotesize 
@@ -28,3 +27,5 @@ Demographic data in the ADRH is constructed from the \textit{Fichero Precensal d
 \end{threeparttable}
 }
 \end{table}
+
+To improve coverage, I conduct two simple adjustments. First, I impute net income per equivalent adult within missing tracts using net income per capita and the average provincial ratio between these two measures, calculated using population weights from non-missing observations. This adjustment reduces missing rates from 5.20\% to 1.63\%. Second, I impute missing Gini coefficients (5.20\% of tracts) using a machine learning approach. More details can be found in Section \ref{sec:method}.
