@@ -26,7 +26,7 @@ This do-file: generates summary stats
     lab var net_income_equiv "Net income per equivalent adult"
     lab var mean_age "Mean age"
     lab var gini "Gini"
-    lab var pct_single_hh "Single-person households (%)"
+    lab var pct_single_hh "Single-person households (\%)"
     lab var dependency_ratio "Dependency ratio"
     lab var population "Population"
 
