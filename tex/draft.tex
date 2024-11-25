@@ -50,13 +50,15 @@ This methodology note develops a transparent and simple framework to estimate in
 
 \section{Introduction}
 
-The rest of this note is organized as follows. Section 2 describes the data sources, their coverage, and scope. Section 3 outlines the methodology, including the modeling of local income distributions and their aggregation. Section 4 presents validation results, and Section 5 discusses potential extensions and applications of the framework to other contexts.
+Understanding the distribution of income across society is crucial for economic analysis and policy design, yet its measurement remains challenging. In this paper, I propose a novel method to estimate the national income distribution by exploiting granular geographic data. The approach combines tract-level income statistics with the theoretical properties of income distributions to reconstruct the entire density. Using detailed administrative data from Spain covering 36,982 census tracts, I show that local income distributions are well-approximated by log-normal distributions, with predicted statistics matching observed values within 5\% on average. This finding allows me to estimate the full national distribution as a population-weighted mixture of tract-specific log-normals. The method provides a flexible framework for analyzing income distributions when individual data is unavailable but detailed geographic information exists.
 
-\section{Data}
+The rest of this note is organized as follows. Section \ref{sec:data} describes the data sources, their coverage, and scope. Section \ref{sec:method} outlines the methodology, including the modeling of local income distributions, their aggregation and the calculation of the relevant validation metrics. Section \ref{sec:results} presents validation results, and Section 5 discusses potential extensions and applications of the framework to other contexts.
+
+\section{Data}\label{sec:data}
 
 \input{tex/1_data}
 
-\section{Methodology}
+\section{Methodology}\label{sec:method}
 
 \input{tex/2_method}
 
