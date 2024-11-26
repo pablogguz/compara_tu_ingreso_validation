@@ -1,9 +1,27 @@
 
-# Load necessary libraries
-library(tidyverse)
-library(data.table)
-library(ggplot2)
-library(haven)
+#-------------------------------------------------------------
+#* Author: Pablo Garcia Guzman
+#* Project: validation metrics for www.comaparatuingreso.es
+#* This script: compares mixture to national log-normal distribution
+#-------------------------------------------------------------
+
+packages_to_load <- c(
+    "tidyverse",
+    "data.table",
+    "haven"
+)
+
+package.check <- lapply(
+  packages_to_load,
+  FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+    }
+  }
+)
+
+lapply(packages_to_load, require, character=T)
+#-------------------------------------------------------------------
 
 # ------------------------------- Load data -------------------------------
 # Assuming 'atlas_all' contains tract-level data with Gini, net_income_equiv, and population
@@ -17,7 +35,7 @@ atlas_all <- atlas_all %>%
 atlas_all <- atlas_all %>%
   mutate(weight = population / sum(population))
 
-# ------------------------------- National Parameters -------------------------------
+# ------------------------------- National parameters -------------------------------
 # Calculate national-level Gini and mean income
 national_gini <- sum(atlas_all$gini * atlas_all$weight)
 national_mean_income <- sum(atlas_all$net_income_equiv * atlas_all$population) / sum(atlas_all$population)
@@ -26,7 +44,7 @@ national_mean_income <- sum(atlas_all$net_income_equiv * atlas_all$population) /
 national_sigma <- sqrt(2) * qnorm((national_gini / 100 + 1) / 2)
 national_mu <- log(national_mean_income) - national_sigma^2 / 2
 
-# ------------------------------- Tract-Level Parameters -------------------------------
+# ------------------------------- Tract-Level parameters -------------------------------
 # Calculate tract-level log-normal parameters
 atlas_all <- atlas_all %>%
   mutate(
@@ -34,7 +52,7 @@ atlas_all <- atlas_all %>%
     mu = log(net_income_equiv) - sigma^2 / 2
   )
 
-# ------------------------------- Mixture Distribution -------------------------------
+# ------------------------------- Mixture distribution -------------------------------
 # Function to evaluate mixture density
 mixture_density <- function(x, data) {
   sapply(x, function(xi) {
@@ -46,7 +64,7 @@ mixture_density <- function(x, data) {
 x_grid <- seq(0, max(atlas_all$net_income_equiv) + 30000, length.out = 1000)
 mixture_densities <- mixture_density(x_grid, atlas_all)
 
-# ------------------------------- National Log-Normal -------------------------------
+# ------------------------------- National log-normal -------------------------------
 # Evaluate national log-normal density
 national_densities <- dlnorm(x_grid, meanlog = national_mu, sdlog = national_sigma)
 
@@ -113,31 +131,64 @@ national_mean <- exp(national_mu + (national_sigma^2 / 2))
 cat("Mean of Mixture Distribution:", format(mixture_mean, big.mark = ".", decimal.mark = ","), "\n")
 cat("Mean of National Log-Normal Distribution:", format(national_mean, big.mark = ".", decimal.mark = ","), "\n")
 
-# Compare medians 
-mixture_median <- quantile(atlas_all$net_income_equiv, 0.5, weights = atlas_all$weight)
-national_median <- exp(national_mu)
+# # Compare medians 
+# mixture_median <- quantile(atlas_all$net_income_equiv, 0.5, weights = atlas_all$weight)
+# national_median <- exp(national_mu)
 
-cat("Median of Mixture Distribution:", format(mixture_median, big.mark = ".", decimal.mark = ","), "\n") 
-cat("Median of National Log-Normal Distribution:", format(national_median, big.mark = ".", decimal.mark = ","), "\n")
+# cat("Median of Mixture Distribution:", format(mixture_median, big.mark = ".", decimal.mark = ","), "\n") 
+# cat("Median of National Log-Normal Distribution:", format(national_median, big.mark = ".", decimal.mark = ","), "\n")
 
-# Function to calculate percentile for a given income
-get_percentile <- function(income, densities, x_values) {
-  # Calculate cumulative density (CDF)
-  cdf <- cumsum(densities) / sum(densities)
+# # Function to calculate percentile for a given income
+# get_percentile <- function(income, densities, x_values) {
+#   # Calculate cumulative density (CDF)
+#   cdf <- cumsum(densities) / sum(densities)
   
-  # Find the percentile corresponding to the given income
-  percentile <- cdf[which.min(abs(x_values - income))] * 100
-  return(percentile)
-}
+#   # Find the percentile corresponding to the given income
+#   percentile <- cdf[which.min(abs(x_values - income))] * 100
+#   return(percentile)
+# }
 
-# # Percentile for the mixture distribution
-# mixture_cdf <- cumsum(mixture_densities) / sum(mixture_densities)
-# mixture_percentile <- get_percentile(25000, mixture_densities, x_grid)
+# # Function to calculate percentiles for a given income distribution
+# get_percentiles <- function(densities, x_values) {
+#   cdf <- cumsum(densities) / sum(densities)
+#   percentile_values <- approx(cdf, x_values, xout = seq(0, 1, length.out = 100))$y
+#   return(percentile_values)
+# }
 
-# # Percentile for the national-level log-normal distribution
-# national_cdf <- cumsum(national_densities) / sum(national_densities)
-# national_percentile <- get_percentile(25000, national_densities, x_grid)
+# # Calculate percentiles for the mixture distribution
+# mixture_percentiles <- get_percentiles(mixture_densities, x_grid)
 
-# # Compare the results
-# cat("Percentile for €50,000 in the mixture distribution:", round(mixture_percentile, 2), "%\n")
-# cat("Percentile for €50,000 in the national-level log-normal distribution:", round(national_percentile, 2), "%\n")
+# # Calculate percentiles for the national log-normal distribution
+# national_percentiles <- get_percentiles(national_densities, x_grid)
+
+# # Create a data frame for plotting
+# percentile_data <- tibble(
+#   Percentile = seq(0, 100, length.out = 100),
+#   Mixture = mixture_percentiles,
+#   National = national_percentiles
+# )
+
+# # Plot
+# ggplot(percentile_data, aes(x = Percentile)) +
+#   geom_line(aes(y = Mixture, color = "Mixture of Tract-Level Log-Normals"), size = 1) +
+#   geom_line(aes(y = National, color = "National Log-Normal"), size = 1, linetype = "dashed") +
+#   scale_color_manual(
+#     values = c("Mixture of Tract-Level Log-Normals" = "#2C3E50", 
+#                "National Log-Normal" = "#58A2EC"),
+#     name = NULL
+#   ) +
+#   labs(
+#     title = "Percentile-Income Comparison",
+#     x = "Percentile",
+#     y = "Net equivalised income (€)"
+#   ) +
+#   theme_minimal(
+#     base_family = "Open Sans"
+#   ) +
+#   theme(
+#     legend.title = element_blank(),
+#     text = element_text(size = 14),
+#     legend.position = "top",
+#     panel.grid.major.x = element_blank(),
+#     panel.grid.minor.x = element_blank()
+#   )
