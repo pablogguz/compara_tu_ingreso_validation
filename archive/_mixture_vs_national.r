@@ -59,7 +59,7 @@ plot_data <- tibble(
 )
 
 # Create plot
-ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
+p <- ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
   geom_line(size = 1) +
   scale_x_continuous(
     labels = scales::comma_format(big.mark = ".", decimal.mark = ","),
@@ -92,7 +92,6 @@ ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
     panel.grid.major.x = element_blank(),  # Remove vertical grid lines
     panel.grid.minor.x = element_blank()   # Remove minor vertical grid lines
   )
-
 
 ggsave(
     "output/tract_vs_national_income_distribution.png", 
