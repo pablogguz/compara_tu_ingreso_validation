@@ -1,25 +1,22 @@
 
 \subsection{Background}
 
-The study of income distributions has been a cornerstone of economic research. A key empirical regularity in this literature is that income distributions tend to approximate a log-normal distribution \citep{aitchison1957lognormal}. This pattern has been documented across different contexts and time periods, leading to its establishment as a stylized fact in economic analysis \citep{lopez2006normal}.
+The study of income distributions has been a cornerstone of economic research. A long-standing empirical regularity in the literature is that income distributions tend to approximate log-normality \citep{aitchison1957lognormal}. This stylized fact is supported by theoretical and empirical foundations. At its core, log-normality arises from the multiplicative interaction of economic factors—such as human capital, local labor market conditions, and productivity—which determine individual incomes \citep{neal2000theories}. Gibrat's Law of Proportionate Effect \citep{gibrat1931inegalites} formalizes a theoretical foundation for log-normality through multiplicative random growth, showing that when the growth rate of a variable is independent of its initial size and the logarithm of the growth rate is independent and identically distributed over time with finite variance, the resulting distribution tends to converge to log-normality. Empirically, log-normal densities have been shown to approximate very well per capita income distributions in large cross-country panels \citep{lopez2006normal}.
 
-The theoretical foundations for log-normality rest on multiple reinforcing mechanisms. First, individual earnings are determined by the multiplicative interaction of factors like human capital, experience, local labor market conditions, and individual productivity \citep{neal2000theories}. Second, Gibrat's law of proportionate effect demonstrates how such multiplicative processes naturally generate log-normal distributions \citep{gibrat1931inegalites}. This theoretical prediction is particularly robust within demographically and geographically homogeneous groups \citep{battistin2009consumption}.
-The spatial dimension adds another layer to this analysis. \cite{sampson2012great} demonstrates that residential location influences economic outcomes through multiple channels, including peer effects, social networks, and institutional quality. 
+The multiplicative processes through which log-normality arises operate most strongly within small, geographically or socially defined groups—such as neighborhoods—where individuals face similar economic environments and interact through shared networks \citep{battistin2009consumption}. The literature of neighborhood effects offers a complementary explanation to this empirical regularity. Specifically, neighborhood effects amplify this tendency by reinforcing homogeneity within local populations through contextual influences (e.g., average neighborhood income or quality of local services) and endogenous spillovers, which emerge from behavioral interactions within the neighborhood, such as peer influences or social norms \citep{manski1993identification, durlauf1996neighborhoods}. These mechanisms create feedback loops that amplify homogeneity within neighborhoods, as individuals who share similar socio-economic environments and interact through local networks often exhibit correlated income trajectories. The resulting interaction structures generate strong within-neighborhood homogeneity while maintaining between-neighborhood heterogeneity \citep{durlauf2004neighborhood}. The existence of strong within-neighborhood homogeneity but between-neighborhood heterogeneity provides a theoretical rationale  for estimating aggregate income distributions as mixtures of local-level distributions.
 
-\cite{durlauf2004neighborhood} formalizes this insight, developing a theoretical framework explaining how local social interactions generate correlation in economic outcomes within neighborhoods. These spatial effects are further reinforced through local labor market networks \citep{topa2015neighborhood}, creating a mechanism where geographic proximity translates into similar economic outcomes. When populations share similar characteristics and face common local conditions, their incomes tend to follow more precisely a log-normal distribution than in more heterogeneous populations \citep{mitzenmacher2004brief}.
+%Relatedly, a more recent literature on place effects has documented that the environment where children grow up has substantial causal impacts on their economic outcomes later in life \cite{chynplace}. Using experimental variation from the Moving to Opportunity program, \cite{chetty2016effects} show that childhood exposure to better neighborhoods significantly increases college attendance and earnings in adulthood.
 
-\paragraph{Mixtures} These insights about local homogeneity and overall heterogeneity suggest the utility of mixture distributions. \cite{parker2012measuring} demonstrates that mixtures of log-normal distributions can accurately capture both within-group and between-group inequality, providing support for approaches that combine local distributional estimates. This is particularly relevant when working with administrative data that provides detailed geographic information but may lack individual-level granularity. The mixture approach allows us to leverage the stronger log-normality at local levels while accommodating the greater complexity of aggregate distributions.
-
-\paragraph{Limitations} While the log-normal distribution provides a good approximation, several studies have documented systematic deviations, particularly in the tails. \cite{clementi2016some} find that while the body of the income distribution is well-approximated by a log-normal, the upper tail often follows a Pareto distribution. This "double distribution" pattern suggests the need for caution when using log-normal approximations, particularly when analyzing high-income populations.
+The log-normal distribution, while providing a good approximation for much of the income distribution, exhibits systematic deviations in the tails. Since Pareto's \citeyearpar{pareto1896cours} original work, research has shown that top incomes follow a power law rather than a log-normal decay \citep{gabaix2016power}. Similarly, studies using detailed administrative tax data have documented that the upper tail of income distributions across countries and time periods are better described by a Pareto distribution \citep{atkinson2011top}. This departure from log-normality at high incomes is important for accurately measuring top income inequality, but modeling the precise behavior of the upper tail is beyond the scope of this note.
 
 \subsection{Empirical approach}
 
 I estimate the national income distribution by exploiting the granular structure of census tract data and the theoretical properties of income distributions. My approach leverages two key insights: (1) income distributions within small geographic units tend to follow log-normal distributions more closely than in larger areas, and (2) the overall distribution can be approximated by a mixture of these local distributions.
 
-Consider a census tract $j$ with an observed mean income $\mu_j$ and Gini coefficient $G_j$. Under the log-normality assumption, if income $X$ follows a log-normal distribution with parameters $(\nu_j, \sigma_j^2)$, then:
+Consider a census tract $j$ with an observed mean income $\mu_j$ and Gini coefficient $G_j$. Under the log-normality assumption, if income $Y$ follows a log-normal distribution with parameters $(\nu_j, \sigma_j^2)$, then:
 
 \begin{equation}
-\ln(X) \sim N(\nu_j, \sigma_j^2)
+\ln(Y) \sim N(\nu_j, \sigma_j^2)
 \end{equation}
 
 The relationship between these parameters and the observed statistics is thus given by:
@@ -38,10 +35,10 @@ where $\Phi(\cdot)$ is the standard normal cumulative distribution function. Fro
 \sigma_j = \sqrt{2}\Phi^{-1}\left(\frac{G_j + 1}{2}\right)
 \end{equation}
 
-Given $\sigma_j$ and $\mu_j$, the distribution for census tract $j$ is fully identified, , as $\nu_j$ can be solved analytically. I then estimate the national distribution as a population-weighted mixture of these local log-normal distributions. For a given income level $x$, the density is given by:
+Given $\sigma_j$ and $\mu_j$, the distribution for census tract $j$ is fully identified, , as $\nu_j$ can be solved analytically. I then estimate the national distribution as a population-weighted mixture of these local log-normal distributions. For a given income level $y$, the density is given by:
 
 \begin{equation}
-f(x) = \sum_{j=1}^{J} w_j f_j(x|\nu_j,\sigma_j^2)
+f(y) = \sum_{j=1}^{J} w_j f_j(x|\nu_j,\sigma_j^2)
 \end{equation}
 
 where $w_j$ is tract $j$'s population share and $f_j(\cdot|\nu_j,\sigma_j^2)$ is the log-normal density function with parameters $(\nu_j,\sigma_j^2)$.
@@ -54,9 +51,36 @@ p = F(q_p) = \sum_{j=1}^{J} w_j \Phi\left(\frac{\ln(q_p) - \nu_j}{\sigma_j}\righ
 
 where $q_p$ is the $p^{th}$ percentile and $F(\cdot)$ is the cumulative distribution function of the mixture. I use numerical root-finding methods to find the value of $q_p$ that satisfies $F(q_p) - p = 0$ within a bounded interval.
 
-This approach has several advantages. First, it respects the theoretical properties of income distributions at local levels where populations are more homogeneous. Second, it preserves tract-level moments while allowing for heterogeneity across tracts. Third, it provides a flexible framework for calculating any distributional statistic of interest.
+This approach has several advantages. First, it respects the theoretical properties of income distributions at local levels where populations are relatively homogeneous. Second, it preserves tract-level moments while allowing for heterogeneity across tracts. Third, it provides a flexible framework that can be adapted and extended to calculate any distributional statistic of interest.
 
-\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.2\% of the sample), I estimate them using machine learning methods. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure. The XGBoost model is trained using default hyperparameters without grid search or additional tuning. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model.
+\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.2\% of the sample), I estimate them using machine learning methods. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure. The XGBoost model is trained using default hyperparameters without grid search or additional tuning. Results are shown in Table \ref{perf}. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model, as illustrated by a 11\% lower RMSE.
+
+\begin{table}[H]
+\centering
+\resizebox{0.5\textwidth}{!}{% 
+\begin{threeparttable}[H]
+\onehalfspacing
+\centering
+\captionsetup{justification=centering} 
+\caption{Performance comparison Between OLS and XGBoost models}\label{perf}
+\begin{tabular}{lccc}
+\hline
+Model    & RMSE & MAE & MAPE (\%) \\
+\hline
+OLS                & 3.15          & 2.41         & 8.32              \\
+XGBoost (CV)       & 2.81          & 2.17         & 7.49              \\
+\hline
+Improvement (\%) & 10.8\% & 10.0\% & 10.0\% \\
+\hline
+\end{tabular}
+\begin{tablenotes}[para,flushleft]
+\scriptsize 
+\textbf{Notes}: This table compares the performance of two predictive models—OLS and XGBoost—on predicting missing Gini coefficients using demographic predictors. RMSE represents the root mean square error, MAE is the mean absolute error, and MAPE is the mean absolute percentage error. Relative improvements in each metric are calculated as the percentage reduction of the error metric when using XGBoost compared to OLS. Results are based on a 5-fold cross-validation procedure for the XGBoost model.
+\end{tablenotes}
+\end{threeparttable}
+}
+\end{table}
+
 
 \paragraph{Validation} To validate the log-normality assumption at the tract level, I compare observed distributional statistics with their theoretical counterparts under log-normality. For each tract $j$, I first recover the parameters of the theoretical log-normal distribution $(\nu_j, \sigma_j)$ using the observed mean income and Gini coefficient. Then, I calculate two key predicted statistics: the P80/P20 ratio and the median income. Under log-normality, these are given by:
 
@@ -68,7 +92,7 @@ This approach has several advantages. First, it respects the theoretical propert
 \text{P50}_j = \exp(\nu_j)
 \end{equation}
 
-To assess the fit, I estimate binned regressions of the form:
+To assess the fit, I estimate OLS regressions of the form:
 
 \begin{equation}
 \hat{y}_j = \alpha + \beta y_j + \epsilon_j
