@@ -5,7 +5,7 @@
 
 <!-- [🇪🇸] Este repositorio contiene los scripts y documentación metodológica utilizados para validar las estimaciones de distribución de ingresos presentadas en [comparatuingreso.es](https://comparatuingreso.es/). El objetivo es garantizar la transparencia y rigor metodológico en la estimación de la posición relativa en la distribución de ingresos de España.  -->
 
-[🇬🇧] This repository contains the scripts and methodological documentation used to validate the income distribution estimates presented at [comparatuingreso.es](https://comparatuingreso.es/). The goal is to ensure transparency and methodological rigor in estimating households' relative position in Spain's income distribution.
+This repository contains the scripts and methodological documentation used to validate the income distribution estimates presented at [comparatuingreso.es](https://comparatuingreso.es/),  a publicly available web platform that enables Spanish households to calculate their relative position within the income distribution.
 
 ## Methodology overview
 
