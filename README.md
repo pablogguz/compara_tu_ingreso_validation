@@ -34,5 +34,5 @@ The methodology combines several statistical approaches to estimate income distr
 | `3a. mun_stats.r` | Calculates municipal statistics | ADRH municipal data, Census data | Municipal summary statistics |
 | `3b. tract_stats.r` | Processes tract-level statistics | ADRH tract data, Census tract data | Tract-level statistics |
 | `4a. variance_decomp.r` | Calculates hierarchical variance decomposition | ADRH data | `output/variance_decomp.png` |
-| `4b. variance_decomp.r` | Calculates hierarchical variance decomposition (national level) | ADRH data |  |
+| `4b. variance_decomp.r` | Calculates hierarchical variance decomposition (national level) | ADRH data | Figures for the text in the methodological note |
 
