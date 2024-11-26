@@ -36,7 +36,7 @@ The heavier left tail and more gradual right tail of the individual distribution
 \begin{figure}[H]
 \begin{center}
 \captionsetup{justification=centering}
-\caption{Estimated income distribution vs. tract means}
+\caption{Estimated mixture vs. tract means}
 \label{fig:distributions}
 \includegraphics[width=0.8\textwidth]{output/tract_vs_individual_income_distribution.png}
 \end{center}
@@ -45,14 +45,12 @@ The heavier left tail and more gradual right tail of the individual distribution
 \end{fignotes2}
 \end{figure}
 
-A natural question is the following: how much does the mixture of local-level distributions improve the accuracy in measuring the income distribution relative to simply assuming log-normality at the national level? The data shows that arguably not much. In Figure \ref{fig:dist2}
-
+A natural question arises: to what extent does the mixture of local-level distributions improve the accuracy of measuring the income distribution compared to simply assuming log-normality at the national level? The comparison shown in Figure \ref{fig:dist2} suggests that the improvement is arguably limited. The national log-normal distribution -- derived using the population-weighted mean equivalised income and Gini index across all tracts -- tends to overestimate incomes at the lower end of the distribution and underestimate incomes at the upper tail, but it provides a reasonably close approximation to the mixture of tract-level distributions. These results suggest that, in contexts where more granular data is not available, assuming log-normality at the national level might remain a fair approximation for capturing the overall shape of the income distribution.
 
 \begin{figure}[H]
 \begin{center}
 \captionsetup{justification=centering}
-\caption{Estimated mixture vs. national log-normal}
-\label{fig:distributions}
+\caption{Estimated mixture vs. national log-normal}\label{fig:dist2}
 \includegraphics[width=0.8\textwidth]{output/tract_vs_national_income_distribution.png}
 \end{center}
 \begin{fignotes2}
@@ -60,13 +58,7 @@ A natural question is the following: how much does the mixture of local-level di
 \end{fignotes2}
 \end{figure}
 
-
-
-
-
-
-
-To better understand the spatial structure of income inequality in Spain and validate the methodological approach, I decompose the total variance of log income for each autonomous community $c$ into components corresponding to different geographic levels using a hierarchical variance decomposition as follows:
+To better understand the spatial structure of income inequality in Spain, I decompose the total variance of log income for each autonomous community $c$ into components corresponding to different geographic levels using a hierarchical approach as follows:
 
 \begin{equation}
 \sigma^2_{c} = 
@@ -76,9 +68,7 @@ To better understand the spatial structure of income inequality in Spain and val
 \underbrace{\sum_{p \in c} w_p \big( \mu_{p} - \mu_{c} \big)^2}_{\text{Between-province}}
 \end{equation}
 
-where $\sigma^2_{j}$ is the variance of log income within each census tract $j$, $\mu_j$ is the mean log income in tract $j$, $\mu_k$ is the mean log income in municipality $k$, $\mu_p$ is the mean log income in province $p$, and  $\mu_{c}$ is the cross-tract mean log income within autonomous community $c$. Population weights for tracts, municipalities, and provinces, are denoted by $w_j, w_k, w_p$, respectively.
-
-The decomposition separates total income variation into four components: within-tract, between-tract (within municipalities), between-municipality (within provinces), and between-province variation. The within-tract component is calculated assuming log-normality within each tract.
+where $\sigma^2_{j}$ is the variance of log income within each census tract $j$, $\mu_j$ is the mean log income in tract $j$, $\mu_k$ is the mean log income in municipality $k$, $\mu_p$ is the mean log income in province $p$, and  $\mu_{c}$ is the cross-tract mean log income within autonomous community $c$. Population weights for tracts, municipalities, and provinces, are denoted by $w_j, w_k, w_p$, respectively. The decomposition separates total income variation into four components: within-tract, between-tract (within municipalities), between-municipality (within provinces), and between-province variation. The within-tract component is calculated assuming log-normality within each tract.
 
 Figure \ref{fig:variance_decomp} presents the results of this decomposition by autonomous community. The analysis reveals that within-tract variation accounts by far for the largest share of income inequality, representing between 85\% and 91\% of total variance across regions. This finding provides additional support for using tract-level distributional estimates as the fundamental building blocks for the aggregate distribution.\footnote{Notice that this does not contradict the earlier discussion on homogeneity in income-generating processes within neighborhoods. Homogeneity in income-generating processes refers to the shared mechanisms (e.g., proportional shocks) influencing income trajectories within neighborhoods, but does not imply identical outcomes. Individual incomes can still vary significantly due to structural or stochastic factors.} A further 12\% is on average explained by between-tract, within-municipality differences. Income differences between municipalities and provinces contribute only marginally to overall income inequality.\footnote{Extending the decomposition analysis at the national level shows that between-community income disparities only account for 5\% of total variance.}
 
