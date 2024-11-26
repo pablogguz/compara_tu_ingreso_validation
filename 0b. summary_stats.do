@@ -16,7 +16,7 @@ This do-file: generates summary stats
 
 *--------------------------------------------------------------------------------
 
-**# Calculate utilities for LiTS IV SSA
+**# Load data
     use "$raw/atlas_all.dta", clear
 
 **# Prepare variables 
