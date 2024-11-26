@@ -3,7 +3,7 @@
 
 The study of income distributions has been a cornerstone of economic research. A long-standing empirical regularity in the literature is that income distributions tend to approximate log-normality \citep{aitchison1957lognormal}. This stylized fact is supported by theoretical and empirical foundations. At its core, log-normality arises from the multiplicative interaction of economic factors—such as human capital, local labor market conditions, and productivity—which determine individual incomes \citep{neal2000theories}. Gibrat's Law of Proportionate Effect \citep{gibrat1931inegalites} formalizes a theoretical foundation for log-normality through multiplicative random growth, showing that when the growth rate of a variable is independent of its initial size and the logarithm of the growth rate is independent and identically distributed over time with finite variance, the resulting distribution tends to converge to log-normality. Empirically, log-normal densities have been shown to approximate very well per capita income distributions in large cross-country panels \citep{lopez2006normal}.
 
-The multiplicative processes through which log-normality arises operate most strongly within small, geographically or socially defined groups—such as neighborhoods—where individuals face similar economic environments and interact through shared networks \citep{battistin2009consumption}. The literature of neighborhood effects offers a complementary explanation to this empirical regularity. Specifically, neighborhood effects amplify this tendency by reinforcing homogeneity within local populations through contextual influences (e.g., average neighborhood income or quality of local services) and endogenous spillovers, which emerge from behavioral interactions within the neighborhood, such as peer influences or social norms \citep{manski1993identification, durlauf1996neighborhoods}. These mechanisms create feedback loops that amplify homogeneity within neighborhoods, as individuals who share similar socio-economic environments and interact through local networks often exhibit correlated income trajectories. The resulting interaction structures generate strong within-neighborhood homogeneity while maintaining between-neighborhood heterogeneity \citep{durlauf2004neighborhood}. The existence of strong within-neighborhood homogeneity but between-neighborhood heterogeneity provides a theoretical rationale  for estimating aggregate income distributions as mixtures of local-level distributions.
+More concretely, the multiplicative processes through which log-normality arises operate most strongly within demographically homogeneous groups where individuals are subject to similar economic shocks \citep{battistin2009consumption}. The literature of neighborhood effects offers a complementary explanation for why such homogeneity in income-generating processes exists at local levels. Specifically, neighborhood effects reinforce homogeneity within local populations through contextual influences (e.g., average neighborhood income or quality of local services) and endogenous spillovers, which emerge from behavioral interactions within the neighborhood, such as peer influences or social norms \citep{manski1993identification, durlauf1996neighborhoods}. These mechanisms create reinforcing feedback loops that generate correlated income trajectories within neighborhoods -- for instance, through shared information about job opportunities, similar human capital accumulation patterns, or common responses to local economic shocks.  The resulting interaction structures generate strong within-neighborhood homogeneity while maintaining between-neighborhood heterogeneity \citep{durlauf2004neighborhood}. This pattern provides a theoretical rationale  for estimating aggregate income distributions as mixtures of local-level distributions.
 
 %Relatedly, a more recent literature on place effects has documented that the environment where children grow up has substantial causal impacts on their economic outcomes later in life \cite{chynplace}. Using experimental variation from the Moving to Opportunity program, \cite{chetty2016effects} show that childhood exposure to better neighborhoods significantly increases college attendance and earnings in adulthood.
 
@@ -57,12 +57,12 @@ This approach has several advantages. First, it respects the theoretical propert
 
 \begin{table}[H]
 \centering
-\resizebox{0.5\textwidth}{!}{% 
+\resizebox{0.7\textwidth}{!}{% 
 \begin{threeparttable}[H]
 \onehalfspacing
 \centering
 \captionsetup{justification=centering} 
-\caption{Performance comparison Between OLS and XGBoost models}\label{perf}
+\caption{Performance comparison between OLS and XGBoost models}\label{perf}
 \begin{tabular}{lccc}
 \hline
 Model    & RMSE & MAE & MAPE (\%) \\
@@ -70,7 +70,7 @@ Model    & RMSE & MAE & MAPE (\%) \\
 OLS                & 3.15          & 2.41         & 8.32              \\
 XGBoost (CV)       & 2.81          & 2.17         & 7.49              \\
 \hline
-Improvement (\%) & 10.8\% & 10.0\% & 10.0\% \\
+Relative improvement over OLS (\%) & 10.8\% & 10.0\% & 10.0\% \\
 \hline
 \end{tabular}
 \begin{tablenotes}[para,flushleft]
