@@ -1,9 +1,9 @@
 # Methodology note for [comparatuingreso.es](https://comparatuingreso.es/)
 
 > [!NOTE]  
-> La nota metodológica no está disponible en español por dos motivos. En primer lugar, el inglés facilita la colaboración con otros investigadores y la reutilización de los scripts. En segundo lugar, si eres lo suficientemente curioso como para haber llegado hasta aquí, leer en inglés no debería ser un problema. ¡Gracias por tu interés!
+> [🇪🇸] La nota metodológica no está disponible en español por dos motivos. En primer lugar, el inglés facilita la colaboración con otros investigadores y la reutilización de los scripts. En segundo lugar, si eres lo suficientemente curioso como para haber llegado hasta aquí, leer en inglés no debería ser un problema. ¡Gracias por tu interés!
 
-[🇪🇸] Este repositorio contiene los scripts y documentación metodológica utilizados para validar las estimaciones de distribución de ingresos presentadas en [comparatuingreso.es](https://comparatuingreso.es/). El objetivo es garantizar la transparencia y rigor metodológico en la estimación de la posición relativa en la distribución de ingresos de España. 
+<!-- [🇪🇸] Este repositorio contiene los scripts y documentación metodológica utilizados para validar las estimaciones de distribución de ingresos presentadas en [comparatuingreso.es](https://comparatuingreso.es/). El objetivo es garantizar la transparencia y rigor metodológico en la estimación de la posición relativa en la distribución de ingresos de España.  -->
 
 [🇬🇧] This repository contains the scripts and methodological documentation used to validate the income distribution estimates presented at [comparatuingreso.es](https://comparatuingreso.es/). The goal is to ensure transparency and methodological rigor in estimating households' relative position in Spain's income distribution.
 
