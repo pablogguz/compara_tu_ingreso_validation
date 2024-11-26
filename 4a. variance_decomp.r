@@ -208,3 +208,12 @@ ggsave(
     width = 10, 
     height = 6
 )
+
+# Stats 
+plot_data %>% 
+    group_by(component) %>% 
+    summarise(
+        mean_share = mean(share),
+        max_share = max(share),
+        min_share = min(share)
+    )
