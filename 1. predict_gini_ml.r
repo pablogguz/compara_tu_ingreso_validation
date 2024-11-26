@@ -1,9 +1,7 @@
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
 #* Project: validation metrics for www.comaparatuingreso.es
-#* This script: example of how to calculate the individual-level
-#*   income distribution from tract-level data using a mixture of
-#*   lognormals
+#* This script: predicts missing Ginis using ML
 #-------------------------------------------------------------
 
 packages_to_load <- c(

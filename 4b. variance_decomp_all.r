@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
 #* Project: validation metrics for www.comaparatuingreso.es
-#* This script: variance decomposition
+#* This script: variance decomposition (national level)
 #-------------------------------------------------------------
 
 packages_to_load <- c(

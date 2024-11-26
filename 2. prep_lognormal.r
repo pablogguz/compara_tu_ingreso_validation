@@ -1,4 +1,3 @@
-
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
 #* Project: validation metrics for www.comaparatuingreso.es
