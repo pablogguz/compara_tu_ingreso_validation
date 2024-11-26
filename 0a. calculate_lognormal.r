@@ -10,7 +10,6 @@ packages_to_load <- c(
     "tidyverse",
     "data.table",
     "ineAtlas",
-    "binsreg",
     "extrafont",
     "haven"
 )
@@ -25,8 +24,6 @@ package.check <- lapply(
 )
 
 lapply(packages_to_load, require, character=T)
-source("_create_comparison_plot.R")
-
 #-------------------------------------------------------------------
 
 # ------------------------------- Load data -------------------------------
@@ -117,7 +114,7 @@ p <- ggplot() +
     # Analytical individual distribution
     geom_line(
         data = data.frame(x = x_grid, y = individual_density),
-        aes(x = x, y = y, color = "Individual analytical"),
+        aes(x = x, y = y, color = "Log-normal"),
         size = 1
     ) +
     scale_x_continuous(
@@ -126,17 +123,27 @@ p <- ggplot() +
     ) +
     scale_color_manual(
         values = c("Tract means" = "#2C3E50", 
-                  "Individual analytical" = "#E74C3C"),
-        name = "Distribution"
+                  "Log-normal" = "#E74C3C"),
+        name = NULL,
+        guide = guide_legend(keywidth = unit(1, "cm"))
     ) +
     labs(
-        title = "Tract vs Individual Income Distribution",
-        subtitle = "Analytical mixture of tract-specific lognormals",
-        x = "Equivalized Income (€)",
+        title = "",
+        subtitle = "",
+        x = "Net equivalised income (€)",
         y = "Density"
     ) +
     theme_minimal(
-        base_family = "Roboto"
+        base_family = "Open Sans"
+    ) +
+    theme(
+        text = element_text(size = 14),  # Increase size of all text
+        legend.position = "top",  # Position legend at top-left
+        legend.justification = c(0, 1), # Anchor point for legend
+        legend.background = element_rect(fill = "white", color = NA),
+        legend.margin = margin(t = -20, r = 10, b = 10, l = 0),
+        panel.grid.major.x = element_blank(),  # Remove vertical grid lines
+        panel.grid.minor.x = element_blank()   # Remove minor vertical grid lines
     )
 
 ggsave(
