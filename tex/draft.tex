@@ -36,9 +36,11 @@
 
 \title{\Large \textsc{A simple and adaptable method to estimate income distributions in Spain}}
 
-\author{\href{https://pablogguz.github.io/}{\large{Pablo García-Guzmán}} \\ \normalsize{EBRD}}
+\author{\href{https://pablogguz.github.io/}{\large{Pablo García-Guzmán}\thanks{Email: \href{mailto:pablo.garcia-guzman@ebrd.com}{garciagp@ebrd.com}. I thank Pedro Torres for his valuable feedback and comments. The views expressed in this methodology note are completely my own and do not reflect the views of the EBRD.}} \\ \normalsize{EBRD}}
 
-\date{\normalsize \today \\ \textcolor{red}{Preliminary draft -- do not cite or circulate}}
+\date{\normalsize \today \\}
+
+% \textcolor{red}{Preliminary draft -- do not cite or circulate}
 
 \maketitle
 \begin{abstract}
@@ -66,9 +68,15 @@ The rest of this note is organized as follows. Section \ref{sec:data} describes 
 
 \input{tex/2_method}
 
-\section{Results}
+\section{Results}\label{sec:results}
 
 \input{tex/3_results}
+
+\section{Conclusion}
+
+This methodology note presents a simple framework for estimating income distributions in Spain, leveraging granular inequality metrics and administrative data at the census-tract level. Specifically, I model local income distributions assuming log-normality and derive national and regional distributions as population-weighted mixtures of these tract-level estimates. Validation results show a high degree of accuracy, with predicted metrics closely matching observed values across census tracts. Results from a hierarchical variance decomposition exercise show that within-tract variation accounts for the vast majority of income inequality in Spain, and reaffirm the importance of neighborhood-level dynamics in shaping the overall income distribution.
+
+Looking ahead, the methodology offers opportunities for extension, such as explicitly addressing the deviations from log-normality at the tails of the distribution or adapting the framework for use in other countries with comparable data available. 
 
 %Bibliography
 \newpage
