@@ -36,3 +36,15 @@ The methodology combines several statistical approaches to estimate income distr
 | `4a. variance_decomp.r` | Calculates hierarchical variance decomposition | ADRH data | `output/variance_decomp.png` |
 | `4b. variance_decomp.r` | Calculates hierarchical variance decomposition (national level) | ADRH data | Figures for the text in the methodological note |
 
+All necessary packages will be installed automatically when running the R scripts. For `ineAtlas`, you will need to install the development version from GitHub:
+
+```r
+pak::pak("pablogguz/ineAtlas")
+```
+
+The Stata scripts require the `estout` and `binsreg` packages. If you don't have them installed, you can do so by running:
+
+```stata
+ssc install estout 
+ssc install binsreg
+```
