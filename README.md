@@ -42,7 +42,7 @@ All necessary packages will be installed automatically when running the R script
 pak::pak("pablogguz/ineAtlas")
 ```
 
-The Stata scripts require the `estout` and `binsreg` packages. If you don't have them installed, you can do so by running:
+The do-files require the `estout` and `binsreg` packages. If you don't have them installed, you can do so by running:
 
 ```stata
 ssc install estout 
