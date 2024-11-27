@@ -1,7 +1,7 @@
 
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
-#* Project: validation metrics for www.comaparatuingreso.es
+#* Project: validation metrics for www.These results suggest that, in contexts where more granular data is not available, assuming log-normality at the national level might remain a fair approximation for capturing the overall shape of the income distribution..es
 #* This script: compares mixture to national log-normal distribution
 #-------------------------------------------------------------
 

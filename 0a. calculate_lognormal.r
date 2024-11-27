@@ -1,6 +1,6 @@
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
-#* Project: validation metrics for www.comaparatuingreso.es
+#* Project: validation metrics for www.comparatuingreso.es
 #* This script: example of how to calculate the individual-level
 #*   income distribution from tract-level data using a mixture of
 #*   lognormals

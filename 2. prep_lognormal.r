@@ -1,6 +1,6 @@
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
-#* Project: validation metrics for www.comaparatuingreso.es
+#* Project: validation metrics for www.comparatuingreso.es
 #* This script: prepares the data for the app using log-normal
 #*  assumption within tracts
 #-------------------------------------------------------------
@@ -118,7 +118,7 @@ mixture_density <- function(x, data) {
 p99 <- Hmisc::wtd.quantile(atlas_params$net_income_equiv, 
                         atlas_params$population/sum(atlas_params$population), 
                         probs = 0.99)
-x_grid <- seq(0, 80000, length.out = 1000)
+x_grid <- seq(0, 140000, length.out = 1000)
 
 # Calculate national density
 density_points <- data.frame(

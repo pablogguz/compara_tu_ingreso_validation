@@ -1,7 +1,7 @@
 
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
-#* Project: validation metrics for www.comaparatuingreso.es
+#* Project: validation metrics for www.comparatuingreso.es
 #* This script: variance decomposition (national level)
 #-------------------------------------------------------------
 

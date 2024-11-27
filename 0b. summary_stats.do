@@ -1,6 +1,6 @@
 
 /*-----------------------------------------------------------------------------
-Project: validation metrics for www.comaparatuingreso.es
+Project: validation metrics for www.comparatuingreso.es
 Autor: Pablo Garcia Guzman
 This do-file: generates summary stats
 ------------------------------------------------------------------------------*/
