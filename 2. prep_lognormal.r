@@ -130,7 +130,7 @@ density_points <- data.frame(
 write_fst(density_points, "data/density_curve.fst")
 
 #-------------------------------------------------------------
-# 4. Calculate provincial density curves
+# 4a. Calculate provincial density curves
 #-------------------------------------------------------------
 print("Calculating provincial density curves...")
 
@@ -149,6 +149,36 @@ provincial_density_data <- atlas_params %>%
     bind_rows()
 
 write_fst(provincial_density_data, "data/density_curve_prov.fst")
+
+#-------------------------------------------------------------
+# 4b. Calculate municipality-level density curves
+#-------------------------------------------------------------
+print("Calculating provincial density curves...")
+
+mun_density_data <- atlas_params %>%
+    group_by(mun_code) %>%
+    group_map(function(data, group) {
+        # Recalculate weights within province
+        data$weight <- data$population/sum(data$population)
+        # Calculate provincial density
+        data.frame(
+            mun_code = group$mun_code,
+            prov_code = group$prov_code,
+            x = x_grid,
+            y = mixture_density(x_grid, data)
+        )
+    }) %>%
+    bind_rows()
+
+dir.create("data/density_curve_mun", showWarnings = FALSE)
+
+# Save municipality-level density curves by province
+mun_density_data %>%
+    group_by(prov_code) %>%
+    group_walk(function(data, group) {
+        file_path <- paste0("data/density_curve_mun/mun_", group$prov_code, ".fst")
+        write_fst(data, file_path)
+    })
 
 #-------------------------------------------------------------
 # 5. Calculate percentiles
