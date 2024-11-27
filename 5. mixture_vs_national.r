@@ -131,12 +131,12 @@ national_mean <- exp(national_mu + (national_sigma^2 / 2))
 cat("Mean of Mixture Distribution:", format(mixture_mean, big.mark = ".", decimal.mark = ","), "\n")
 cat("Mean of National Log-Normal Distribution:", format(national_mean, big.mark = ".", decimal.mark = ","), "\n")
 
-# # Compare medians 
-# mixture_median <- quantile(atlas_all$net_income_equiv, 0.5, weights = atlas_all$weight)
-# national_median <- exp(national_mu)
+# Compare medians 
+mixture_median <- quantile(atlas_all$net_income_equiv, 0.5, weights = atlas_all$weight)
+national_median <- exp(national_mu)
 
-# cat("Median of Mixture Distribution:", format(mixture_median, big.mark = ".", decimal.mark = ","), "\n") 
-# cat("Median of National Log-Normal Distribution:", format(national_median, big.mark = ".", decimal.mark = ","), "\n")
+cat("Median of Mixture Distribution:", format(mixture_median, big.mark = ".", decimal.mark = ","), "\n") 
+cat("Median of National Log-Normal Distribution:", format(national_median, big.mark = ".", decimal.mark = ","), "\n")
 
 # # Function to calculate percentile for a given income
 # get_percentile <- function(income, densities, x_values) {
