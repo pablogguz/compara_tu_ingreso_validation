@@ -79,14 +79,14 @@ national_decomp <- atlas_all %>%
         # Total variance (now correctly including within-tract component)
         total_var = weighted.var(log_income, population) + weighted.mean(within_var, population),
         
-        # Between provinces variance
-        between_prov = weighted.var(prov_mean, population),
-        
-        # Between communities variance (across Autonomous Communities)
+        # Between communities variance 
         between_ccaa = weighted.var(ccaa_mean, population),
         
+        # Between provinces variance (within Autonomous Communities)
+        between_prov = weighted.var(prov_mean, population) -  weighted.var(ccaa_mean, population),
+
         # Between municipalities (within provinces)
-        between_mun = weighted.var(log_income, population) - weighted.var(prov_mean, population),
+        between_mun = weighted.var(mun_mean, population) - weighted.var(prov_mean, population),
         
         # Between tracts (within municipalities)
         between_tract = weighted.var(log_income, population) - weighted.var(mun_mean, population),

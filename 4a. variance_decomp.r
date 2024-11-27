@@ -116,7 +116,7 @@ variance_decomp <- atlas_all %>%
         mean_log_income = mean(log_income),
         mean_within_var = mean(within_var),
         
-        # Total variance (now correctly including within-tract component)
+        # Total variance 
         total_var = weighted.var(log_income, population) + weighted.mean(within_var, population),
         
         # Between province variance
