@@ -24,7 +24,6 @@ package.check <- lapply(
 )
 
 lapply(packages_to_load, require, character=T)
-source("_create_comparison_plot.R")
 
 #-------------------------------------------------------------------
 
@@ -73,9 +72,9 @@ data_clean <- atlas_all %>%
 
 # 1. Predict using existing OLS model
 model_data <- data_clean %>%
-    filter(!is.na(gini),              # Need non-missing Gini
-           !is.na(net_income_equiv),  # Need income
-           !is.na(dependency_ratio),  # Need demographics
+    filter(!is.na(gini),              
+           !is.na(net_income_equiv), 
+           !is.na(dependency_ratio),  
            !is.na(mean_age),
            !is.na(pct_single_hh)) %>%
     mutate(
@@ -186,9 +185,6 @@ print(performance)
 
 cat("\nXGBoost Performance (cross-validated):\n")
 print(cv_results)
-
-# We can see that XGBoost performs better than OLS in this case, 
-# therefore we will use the XGBoost model to predict Gini coefficients.
 
 # Combine tract codes with XGBoost predictions
 predicted_gini <- data.frame(

@@ -86,7 +86,7 @@ p <- ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
   scale_color_manual(
     values = c(
       "Mixture" = "#2C3E50",  # Navy
-      "National log-normal" = "#58A2EC"                 # Light Blue
+      "National log-normal" = "#58A2EC"                
     ),
     name = NULL,
     guide = guide_legend(keywidth = unit(1, "cm"))
@@ -101,14 +101,14 @@ p <- ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
     base_family = "Open Sans"
   ) +
   theme(
-    legend.title = element_blank(),  # Remove legend title
-    text = element_text(size = 14),  # Increase size of all text
-    legend.position = "top",         # Position legend at the top
-    legend.justification = c(0, 1),  # Anchor point for legend
+    legend.title = element_blank(),  
+    text = element_text(size = 14),  
+    legend.position = "top",         
+    legend.justification = c(0, 1),  
     legend.background = element_rect(fill = "white", color = NA),
     legend.margin = margin(t = -20, r = 10, b = 10, l = 0),
-    panel.grid.major.x = element_blank(),  # Remove vertical grid lines
-    panel.grid.minor.x = element_blank()   # Remove minor vertical grid lines
+    panel.grid.major.x = element_blank(),  
+    panel.grid.minor.x = element_blank()   
   )
 
 ggsave(
@@ -137,58 +137,3 @@ national_median <- exp(national_mu)
 
 cat("Median of Mixture Distribution:", format(mixture_median, big.mark = ".", decimal.mark = ","), "\n") 
 cat("Median of National Log-Normal Distribution:", format(national_median, big.mark = ".", decimal.mark = ","), "\n")
-
-# # Function to calculate percentile for a given income
-# get_percentile <- function(income, densities, x_values) {
-#   # Calculate cumulative density (CDF)
-#   cdf <- cumsum(densities) / sum(densities)
-  
-#   # Find the percentile corresponding to the given income
-#   percentile <- cdf[which.min(abs(x_values - income))] * 100
-#   return(percentile)
-# }
-
-# # Function to calculate percentiles for a given income distribution
-# get_percentiles <- function(densities, x_values) {
-#   cdf <- cumsum(densities) / sum(densities)
-#   percentile_values <- approx(cdf, x_values, xout = seq(0, 1, length.out = 100))$y
-#   return(percentile_values)
-# }
-
-# # Calculate percentiles for the mixture distribution
-# mixture_percentiles <- get_percentiles(mixture_densities, x_grid)
-
-# # Calculate percentiles for the national log-normal distribution
-# national_percentiles <- get_percentiles(national_densities, x_grid)
-
-# # Create a data frame for plotting
-# percentile_data <- tibble(
-#   Percentile = seq(0, 100, length.out = 100),
-#   Mixture = mixture_percentiles,
-#   National = national_percentiles
-# )
-
-# # Plot
-# ggplot(percentile_data, aes(x = Percentile)) +
-#   geom_line(aes(y = Mixture, color = "Mixture of Tract-Level Log-Normals"), size = 1) +
-#   geom_line(aes(y = National, color = "National Log-Normal"), size = 1, linetype = "dashed") +
-#   scale_color_manual(
-#     values = c("Mixture of Tract-Level Log-Normals" = "#2C3E50", 
-#                "National Log-Normal" = "#58A2EC"),
-#     name = NULL
-#   ) +
-#   labs(
-#     title = "Percentile-Income Comparison",
-#     x = "Percentile",
-#     y = "Net equivalised income (€)"
-#   ) +
-#   theme_minimal(
-#     base_family = "Open Sans"
-#   ) +
-#   theme(
-#     legend.title = element_blank(),
-#     text = element_text(size = 14),
-#     legend.position = "top",
-#     panel.grid.major.x = element_blank(),
-#     panel.grid.minor.x = element_blank()
-#   )

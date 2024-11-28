@@ -154,7 +154,7 @@ ggsave(
     height = 6
 )
 
-# ------------------------------------- Checks -------------------------------------
+# ------------------------------------- Some checks -------------------------------------
 
 # 1. Mean comparison (should match)
 analytical_mean <- sum(known_tracts$weight * known_tracts$net_income_equiv)
