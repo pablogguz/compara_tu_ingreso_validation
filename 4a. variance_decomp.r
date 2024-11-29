@@ -68,24 +68,24 @@ ccaa_mapping <- data.frame(
         "51", "52" # Ceuta y Melilla
     ),
     ccaa_name = c(
-        rep("País Vasco", 3),
-        rep("Castilla-La Mancha", 5),
-        "Madrid",
-        rep("C. Valenciana", 3),
-        rep("Andalucía", 8),
-        rep("Castilla y León", 9),
-        rep("Extremadura", 2),
-        "Baleares",
-        rep("Cataluña", 4),
-        rep("Galicia", 4),
-        rep("Aragón", 3),
-        "La Rioja",
-        "Murcia",
-        "Navarra",
-        "Asturias",
-        rep("Canarias", 2),
-        "Cantabria",
-        rep("Ceuta y Melilla", 2)
+        rep("Basque Country", 3),            # País Vasco in Spanish
+        rep("Castile-La Mancha", 5),         # Castilla-La Mancha
+        "Madrid",                            # Madrid
+        rep("Valencian Community", 3),       # Comunidad Valenciana
+        rep("Andalusia", 8),                 # Andalucía
+        rep("Castile and Leon", 9),          # Castilla y León
+        rep("Extremadura", 2),               # Extremadura
+        "Balearic Islands",                  # Baleares
+        rep("Catalonia", 4),                 # Cataluña
+        rep("Galicia", 4),                   # Galicia
+        rep("Aragon", 3),                    # Aragón
+        "La Rioja",                          # La Rioja
+        "Murcia",                            # Murcia 
+        "Navarre",                           # Navarra
+        "Asturias",                          # Asturias
+        rep("Canary Islands", 2),            # Canarias
+        "Cantabria",                         # Cantabria
+        rep("Ceuta and Melilla", 2)          # Ceuta y Melilla
     )
 )
 
