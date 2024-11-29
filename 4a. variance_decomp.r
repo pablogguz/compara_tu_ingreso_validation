@@ -155,7 +155,7 @@ print(variance_decomp %>%
 
 # Create visualization
 plot_data <- variance_decomp %>%
-    select(ccaa_name, ends_with("share")) %>%
+    select(ccaa_name, ends_with("share"), population) %>%
     pivot_longer(
         cols = ends_with("share"),
         names_to = "component",
@@ -174,7 +174,7 @@ plot_data <- plot_data %>%
     drop_na()
 
 p <- ggplot(plot_data, 
-      aes(x = reorder(ccaa_name, share), 
+      aes(x = reorder(ccaa_name, population), 
           y = share, 
           fill = component)) +
    geom_bar(stat = "identity") +
