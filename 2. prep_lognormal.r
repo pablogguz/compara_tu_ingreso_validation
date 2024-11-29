@@ -113,10 +113,7 @@ mixture_density <- function(x, data) {
     })
 }
 
-# Create evaluation points (up to 99th percentile for better visualization)
-p99 <- Hmisc::wtd.quantile(atlas_params$net_income_equiv, 
-                        atlas_params$population/sum(atlas_params$population), 
-                        probs = 0.99)
+# Create evaluation points
 x_grid <- seq(0, 160000, length.out = 1000)
 
 # Calculate national density
