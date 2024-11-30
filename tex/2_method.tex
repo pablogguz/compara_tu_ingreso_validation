@@ -3,9 +3,7 @@
 
 The study of income distributions has been a cornerstone of economic research. A long-standing empirical regularity in the literature is that income distributions tend to approximate a log-normal density \citep{aitchison1957lognormal}. This stylized fact is supported by both theoretical and empirical foundations. At its core, log-normality arises from the multiplicative interaction of economic factors -- such as human capital, local labor market conditions, and productivity -- which determine individual incomes \citep{neal2000theories}. Gibrat's Law of Proportionate Effect \citep{gibrat1931inegalites} formalizes the theoretical basis for log-normality through multiplicative random growth, showing that when the growth rate of a variable is independent of its initial size and the logarithm of the growth rate is independent and identically distributed over time with finite variance, the resulting distribution tends to converge to log-normality. 
 
-% Empirically, log-normal densities have been shown to approximate very well per capita income distributions in large cross-country panels \citep{lopez2006normal}.
-
-More concretely, the multiplicative processes through which log-normality arises operate most strongly within demographically homogeneous groups where individuals are subject to similar economic shocks \citep{aitchison1957lognormal, battistin2009consumption}. \citet{lubrano2016} provide empirical support for this pattern, showing that a mixture of log-normals is particularly suitable for modeling income in fairly homogeneous sub-populations while at the same time accounting for between-group heterogeneity. Relatedly, \citet{gardini2022} show that a finite mixture of log-normals provides substantial improvements in fit compared to single log-normal specifications at higher levels of aggregation.
+More concretely, the multiplicative processes through which log-normality arises operate most strongly within demographically homogeneous groups where individuals are subject to similar economic shocks \citep{weiss1972, aitchison1957lognormal, battistin2009consumption}. This methodology note relates to a larger body of research providing empirical support for this pattern, showing that a mixture of log-normals is particularly suitable for modeling income in fairly homogeneous sub-populations while at the same time accounting for between-group heterogeneity \citep{flachaire2007, lubrano2016}. This finding is particularly relevant at higher levels of aggregation, where finite mixtures of log-normals provide substantial improvements in fit compared to single log-normal specifications \citep{gardini2022}.
 
 The literature of neighborhood effects offers a complementary explanation for why such homogeneity in income-generating processes exists at local levels. In particular, neighborhood effects reinforce homogeneity within local populations through contextual influences and endogenous spillovers, which emerge from behavioral interactions within the neighborhood, such as peer influences or social norms \citep{manski1993identification, durlauf1996neighborhoods}. These mechanisms create reinforcing feedback loops that generate correlated income trajectories within neighborhoods -- for instance, through shared information about job opportunities, similar human capital accumulation patterns, or common responses to local economic shocks.  The resulting interaction structures generate strong within-neighborhood homogeneity while maintaining between-neighborhood heterogeneity \citep{durlauf2004neighborhood}. This pattern provides a rationale for estimating aggregate income distributions as mixtures of local-level distributions.
 
@@ -59,7 +57,7 @@ where $q_p$ is the $p^{th}$ percentile and $F(\cdot)$ is the cumulative distribu
 
 %This approach has several advantages. First, it respects the theoretical properties of income distributions at local levels where populations are relatively homogeneous. Second, it preserves tract-level moments while allowing for heterogeneity across tracts. Third, it provides a flexible framework that can be adapted and extended to calculate any distributional statistic of interest.
 
-\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.2\% of the sample), I estimate them using a machine learning approach. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure, and is trained using default hyperparameters without grid search or additional tuning. Results are shown in Table \ref{perf}. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model, as illustrated by a 10.8\% lower RMSE.
+\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.2\% of the sample), I estimate them using a machine learning approach. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, mean household size, population size, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure, and is trained using default hyperparameters without grid search or additional tuning. For comparison, I also estimate a baseline OLS model using the same set of predictors. Out-of-sample prediction errors under both approaches are shown in Table \ref{perf}. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model, as illustrated by a 9.35\% lower RMSE.
 
 \begin{table}[H]
 \centering
@@ -73,15 +71,15 @@ where $q_p$ is the $p^{th}$ percentile and $F(\cdot)$ is the cumulative distribu
 \hline
 Model    & RMSE & MAE & MAPE (\%) \\
 \hline
-OLS                & 3.15          & 2.41         & 8.32              \\
+OLS                & 3.10          & 2.32         & 8.02              \\
 XGBoost (CV)       & 2.81          & 2.17         & 7.49              \\
 \hline
-Relative improvement over OLS (\%) & 10.8\% & 10.0\% & 10.0\% \\
+Relative improvement over OLS (\%) & 9.35\% & 6.47\% & 6.61\% \\
 \hline
 \end{tabular}
 \begin{tablenotes}[para,flushleft]
 \scriptsize 
-\textbf{Notes}: This table compares the performance of two predictive models—OLS and XGBoost—on predicting missing Gini coefficients using demographic predictors. RMSE represents the root mean square error, MAE is the mean absolute error, and MAPE is the mean absolute percentage error. Relative improvements in each metric are calculated as the percentage reduction of the error metric when using XGBoost compared to OLS. Results are based on a 5-fold cross-validation procedure for the XGBoost model.
+\textbf{Notes}: This table compares the out-of-sample performance of two predictive models -- OLS and XGBoost -- on predicting missing Gini coefficients using demographic predictors. RMSE represents the root mean square error, MAE is the mean absolute error, and MAPE is the mean absolute percentage error. Relative improvements in each metric are calculated as the percentage reduction of the error metric when using XGBoost compared to OLS. Results are based on a 5-fold cross-validation procedure for the XGBoost model.
 \end{tablenotes}
 \end{threeparttable}
 }
