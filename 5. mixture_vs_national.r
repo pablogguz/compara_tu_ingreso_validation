@@ -44,37 +44,28 @@ national_mean_income <- sum(atlas_all$net_income_equiv * atlas_all$population) /
 national_sigma <- sqrt(2) * qnorm((national_gini / 100 + 1) / 2)
 national_mu <- log(national_mean_income) - national_sigma^2 / 2
 
-# ------------------------------- Tract-Level parameters -------------------------------
-# Calculate tract-level log-normal parameters
-atlas_all <- atlas_all %>%
-  mutate(
-    sigma = sqrt(2) * qnorm((gini / 100 + 1) / 2),
-    mu = log(net_income_equiv) - sigma^2 / 2
-  )
-
 # ------------------------------- Mixture distribution -------------------------------
-# Function to evaluate mixture density
-mixture_density <- function(x, data) {
-  sapply(x, function(xi) {
-    sum(data$weight * dlnorm(xi, meanlog = data$mu, sdlog = data$sigma))
-  })
-}
-
-# Generate x values and evaluate densities
-x_grid <- seq(0, max(atlas_all$net_income_equiv) + 30000, length.out = 1000)
-mixture_densities <- mixture_density(x_grid, atlas_all)
+mixture_densities <- read.fst("data/density_curve.fst")
 
 # ------------------------------- National log-normal -------------------------------
+x_grid <- seq(0, max(atlas_all$net_income_equiv) + 30000, length.out = 1000)
+
 # Evaluate national log-normal density
 national_densities <- dlnorm(x_grid, meanlog = national_mu, sdlog = national_sigma)
+national_densities <- tibble(
+  x = x_grid,
+  y = c(national_densities)
+)
 
 # ------------------------------- Plot -------------------------------
-# Combine data for plotting
-plot_data <- tibble(
-  x = rep(x_grid, 2),
-  density = c(mixture_densities, national_densities),
-  Distribution = rep(c("Mixture", "National log-normal"), each = length(x_grid))
-)
+# Combine national and mixture densities into a single data frame
+plot_data <- bind_rows(
+  mixture_densities %>% mutate(Distribution = "Mixture"),
+  national_densities %>% mutate(Distribution = "National log-normal")
+) %>%
+  rename(
+    density = y
+  )
 
 # Create plot
 p <- ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
