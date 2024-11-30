@@ -84,7 +84,7 @@ model_data <- data_clean %>%
 # Get predictions from OLS
 model1 <- feols(
     gini ~ log_income_equiv + 
-          dependency_ratio + mean_age + pct_single_hh | prov_code,
+          dependency_ratio + mean_age + pct_single_hh + mean_hh_size + population | prov_code,
     data = model_data
 )
 
@@ -112,8 +112,7 @@ performance <- model_data %>%
 # 2. Now let's try XGBoost with cross-validation
 # Prepare data for XGBoost
 features <- c("log_income_equiv", "dependency_ratio", "mean_age", 
-              "pct_single_hh", "pct_under18", "pct_over65", 
-              "mean_hh_size", "population")
+              "pct_single_hh", "pct_under18", "mean_hh_size", "population")
 
 # Create training matrix
 train_x <- model_data %>%

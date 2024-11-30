@@ -19,6 +19,20 @@ This do-file: generates summary stats
 **# Load data
     use "$raw/atlas_all.dta", clear
 
+**# Check: municipalities with just 1 tract
+    bys mun_code: g n_tracts = _N 
+    preserve 
+        gcollapse (sum) population (max) n_tracts, by(mun_code prov_name)
+        su n_tracts 
+        tab n_tracts 
+        
+        gcollapse (sum) population, by(n_tracts)
+        gegen total_pop = sum(population)
+        gen pct = population/total_pop
+        sum pct if n_tracts == 1
+        di "Pop. share in mun. with just 1 tract: `r(mean)'*100"
+    restore 
+
 **# Prepare variables 
     g dependency_ratio = (pct_under18 + pct_over65)/(100 - pct_under18 - pct_over65)
 
