@@ -8,7 +8,8 @@
 packages_to_load <- c(
     "tidyverse",
     "data.table",
-    "haven"
+    "haven",
+    "fst"
 )
 
 package.check <- lapply(
@@ -33,19 +34,26 @@ atlas_all <- atlas_all %>%
 
 # Calculate weights
 atlas_all <- atlas_all %>%
-  mutate(weight = population / sum(population))
+  mutate(
+      # Get tract-level sigma from Gini
+      tract_sigma = sqrt(2) * qnorm((gini/100 + 1)/2),
+      # Get tract-level mu to preserve mean
+      tract_mu = log(net_income_equiv) - tract_sigma^2/2,
+      # Calculate population weights
+      weight = population/sum(population)
+  )
 
 # ------------------------------- National parameters -------------------------------
-# Calculate national-level Gini and mean income
-national_gini <- sum(atlas_all$gini * atlas_all$weight)
-national_mean_income <- sum(atlas_all$net_income_equiv * atlas_all$population) / sum(atlas_all$population)
+# National-level statistics from EU-SILC
+national_mean <- 20676  # From EU-SILC 2022
+national_gini <- 31.5   # From EU-SILC 2022
 
-# Calculate parameters for national log-normal distribution
-national_sigma <- sqrt(2) * qnorm((national_gini / 100 + 1) / 2)
-national_mu <- log(national_mean_income) - national_sigma^2 / 2
+national_sigma <- sqrt(2) * qnorm((national_gini/100 + 1)/2)
+national_mu <- log(national_mean) - national_sigma^2/2
 
 # ------------------------------- Mixture distribution -------------------------------
 mixture_densities <- read.fst("data/density_curve.fst")
+national_percentiles <- read_fst("data/national_percentiles.fst")
 
 # ------------------------------- National log-normal -------------------------------
 x_grid <- seq(0, max(atlas_all$net_income_equiv) + 30000, length.out = 1000)
@@ -123,7 +131,10 @@ cat("Mean of Mixture Distribution:", format(mixture_mean, big.mark = ".", decima
 cat("Mean of National Log-Normal Distribution:", format(national_mean, big.mark = ".", decimal.mark = ","), "\n")
 
 # Compare medians 
-mixture_median <- quantile(atlas_all$net_income_equiv, 0.5, weights = atlas_all$weight)
+mixture_median <- national_percentiles %>%
+  filter(percentile == 50) %>%
+  pull(value)
+
 national_median <- exp(national_mu)
 
 cat("Median of Mixture Distribution:", format(mixture_median, big.mark = ".", decimal.mark = ","), "\n") 
