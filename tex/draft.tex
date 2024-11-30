@@ -54,11 +54,13 @@ This methodology note develops a transparent and simple framework to estimate ag
 
 \setcounter{page}{1}
 
-% \section{Introduction}
+\section{Introduction}
 
-% Understanding the income distribution is crucial for economic analysis and policy design, yet its measurement remains challenging. In this paper, I propose a transparent and simple method to estimate national-level income distributions when granular income and inequality measures are available. Using detailed administrative data from Spain covering over 36,000 census tracts, I show that local income distributions are well-approximated by log-normal distributions, with predicted statistics matching observed values within 5\% on average. This sets the ground for estimating aggregate income distribution as a population-weighted mixture of tract-specific log-normals. The method provides a flexible framework for estimating income distributions when individual data is unavailable.
+Understanding the income distribution is crucial for economic analysis and policy design, yet its measurement remains challenging. In this paper, I propose a transparent and simple method to estimate national-level income distributions when granular income and inequality measures are available. The approach builds on two key insights: first, that income distributions within demographically homogeneous areas tend to follow log-normal distributions; and second, that aggregate distributions can be effectively modeled as mixtures of these local distributions. Using detailed administrative data from over 36,000 Spanish census tracts, I demonstrate that local income distributions are well-approximated by log-normal distributions, with predicted statistics matching observed values within 5\% on average. This method provides a flexible parametric framework for estimating income distributions when individual data is unavailable
 
-% The rest of this note is organized as follows. Section \ref{sec:data} describes the data sources, their coverage, and scope. Section \ref{sec:method} outlines the methodology, including the modeling of local income distributions, their aggregation and the calculation of the relevant validation metrics. Section \ref{sec:results} presents the results. Finally, Section \ref{sec:conc} concludes the note.
+%Using detailed administrative data from Spain covering over 36,000 census tracts, I show that local income distributions are well-approximated by log-normal distributions, with predicted statistics matching observed values within 5\% on average. This sets the ground for estimating aggregate income distribution as a population-weighted mixture of tract-specific log-normals. The method provides a flexible framework for estimating income distributions when individual data is unavailable.
+
+The rest of this note is organized as follows. Section \ref{sec:data} describes the data sources, their coverage, and scope. Section \ref{sec:method} outlines the methodology, including the modeling of local income distributions, their aggregation and the calculation of the relevant validation metrics. Section \ref{sec:results} presents the results. Finally, Section \ref{sec:conc} concludes the note.
 
 \section{Data}\label{sec:data}
 
