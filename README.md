@@ -29,7 +29,7 @@ The methodology combines several statistical approaches to estimate income distr
 | `0c. validation.do` | Validation metrics | ADRH data | `output/binned_scatter_p80p20.png`, `output/binned_scatter_median.png` |
 | `1. predict_gini_ml.r` | Implements ML model to predict missing Gini coefficients | ADRH tract data, demographic variables | `gini_predicted.fst` |
 | `2. prep_lognormal.r` | Prepares income distributions using log-normal mixture | ADRH data, predicted Gini | National and provincial distributions |
-| `3a. mun_stats.r` | Calculates municipal statistics | ADRH municipal data, Census data | Municipal summary statistics |
+| `3a. mun_stats.r` | Calculates municipal statistics | ADRH municipal data, Census data | Municipality-level statistics |
 | `3b. tract_stats.r` | Processes tract-level statistics | ADRH tract data, Census tract data | Tract-level statistics |
 | `4a. variance_decomp.r` | Calculates hierarchical variance decomposition | ADRH data | `output/variance_decomp.png` |
 | `4b. variance_decomp_all.r` | Calculates hierarchical variance decomposition (national level) | ADRH data | Figures for the text in the methodological note |
