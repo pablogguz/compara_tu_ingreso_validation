@@ -37,7 +37,7 @@ mixture_densities <- read.fst("data/density_curve.fst")
 national_percentiles <- read_fst("data/national_percentiles.fst")
 
 # ------------------------------- National log-normal -------------------------------
-x_grid <- seq(0, max(mixture_densities$x) + 30000, length.out = 1000)
+x_grid <- seq(0, max(mixture_densities$x), length.out = 1000)
 
 # Evaluate national log-normal density
 national_densities <- dlnorm(x_grid, meanlog = national_mu, sdlog = national_sigma)
@@ -61,7 +61,7 @@ p <- ggplot(plot_data, aes(x = x, y = density, color = Distribution)) +
   geom_line(size = 1) +
   scale_x_continuous(
     labels = scales::comma_format(big.mark = ".", decimal.mark = ","),
-    limits = c(0, max(atlas_all$net_income_equiv) + 30000)
+    limits = c(0, max(mixture_densities$x) - 80000)
   ) +
   scale_color_manual(
     values = c(
@@ -98,8 +98,6 @@ ggsave(
     width = 10, 
     height = 6
 )
-
-# Verify means ----
 
 # Mean of the mixture distribution
 mixture_mean <- sum(atlas_all$weight * atlas_all$net_income_equiv)

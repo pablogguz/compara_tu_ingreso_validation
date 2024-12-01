@@ -70,7 +70,7 @@ data_clean <- atlas_all %>%
 
 # ------------------------- Model training ---------------------------
 
-# 1. Predict using existing OLS model
+# 1. OLS
 model_data <- data_clean %>%
     filter(!is.na(gini),              
            !is.na(net_income_equiv), 
@@ -109,7 +109,7 @@ performance <- model_data %>%
         mape = mean(abs(gini - predicted_gini)/gini)*100
     )
 
-# 2. Now let's try XGBoost with cross-validation
+# 2. XGBoost with cross-validation
 # Prepare data for XGBoost
 features <- c("log_income_equiv", "dependency_ratio", "mean_age", 
               "pct_single_hh", "pct_under18", "mean_hh_size", "population")
