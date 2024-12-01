@@ -12,7 +12,7 @@ This repository contains the scripts and methodological documentation used to va
 The methodology combines several statistical approaches to estimate income distributions at various geographical levels:
 
 1. **Data sources**
-   - _Atlas de Distribución de Renta de los Hogares_ ([ADRH](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608)) from the Spanish Statistical Office (_INE_) at the municipality and census tract levels
+   - _Atlas de Distribución de Renta de los Hogares_ ([ADRH](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608)) from the Spanish Statistical Office at the municipality and census tract levels
    - [Census 2021](https://www.ine.es/censos2021/) data at the municipality and census tract levels
 
 2. **Core assumptions**
