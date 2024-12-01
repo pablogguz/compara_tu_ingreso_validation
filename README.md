@@ -47,3 +47,5 @@ The do-files require the `estout` and `binsreg` packages. If you don't have them
 ssc install estout 
 ssc install binsreg
 ```
+
+A full methodology note is available [here](./tex/note.pdf).
