@@ -7,16 +7,10 @@
 
 This repository contains the scripts and methodological documentation used to validate the income distribution estimates presented at [comparatuingreso.es](https://comparatuingreso.es/), a publicly available web platform that enables Spanish households to calculate their relative position within the income distribution.
 
-## Methodology overview
+## Data
 
-1. **Data sources**
-   - _Atlas de Distribución de Renta de los Hogares_ ([ADRH](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608)) from the Spanish Statistical Office at the municipality and census tract levels
-   - [Census 2021](https://www.ine.es/censos2021/) data at the municipality and census tract levels
-
-2. **Core assumptions**
-   - Log-normal distribution of income within census tracts
-   - ML modeling (XGBoost) for missing Gini coefficients using socio-demographic variables as predictors
-   - Population-weighted mixture of log-normal distributions for aggregating across geographies
+- _Atlas de Distribución de Renta de los Hogares_ ([ADRH](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608)) from the Spanish Statistical Office at the municipality and census tract levels
+- [Census 2021](https://www.ine.es/censos2021/) data at the municipality and census tract levels
 
 ## Code structure
 
