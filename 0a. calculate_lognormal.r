@@ -146,14 +146,6 @@ p <- ggplot() +
         panel.grid.minor.x = element_blank()   # Remove minor vertical grid lines
     )
 
-ggsave(
-    "output/tract_vs_individual_income_distribution.png", 
-    p, 
-    bg = "white",
-    width = 10, 
-    height = 6
-)
-
 # ------------------------------------- Some checks -------------------------------------
 
 # 1. Mean comparison (should match)

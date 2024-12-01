@@ -24,25 +24,6 @@ package.check <- lapply(
 lapply(packages_to_load, require, character=T)
 #-------------------------------------------------------------------
 
-# ------------------------------- Load data -------------------------------
-# Assuming 'atlas_all' contains tract-level data with Gini, net_income_equiv, and population
-atlas_all <- read_dta("data-raw/atlas_all.dta")
-
-# Filter for relevant data
-atlas_all <- atlas_all %>%
-  filter(!is.na(gini), !is.na(net_income_equiv), !is.na(population), population > 0)
-
-# Calculate weights
-atlas_all <- atlas_all %>%
-  mutate(
-      # Get tract-level sigma from Gini
-      tract_sigma = sqrt(2) * qnorm((gini/100 + 1)/2),
-      # Get tract-level mu to preserve mean
-      tract_mu = log(net_income_equiv) - tract_sigma^2/2,
-      # Calculate population weights
-      weight = population/sum(population)
-  )
-
 # ------------------------------- National parameters -------------------------------
 # National-level statistics from EU-SILC
 national_mean <- 20676  # From EU-SILC 2022
@@ -56,7 +37,7 @@ mixture_densities <- read.fst("data/density_curve.fst")
 national_percentiles <- read_fst("data/national_percentiles.fst")
 
 # ------------------------------- National log-normal -------------------------------
-x_grid <- seq(0, max(atlas_all$net_income_equiv) + 30000, length.out = 1000)
+x_grid <- seq(0, max(mixture_densities$x) + 30000, length.out = 1000)
 
 # Evaluate national log-normal density
 national_densities <- dlnorm(x_grid, meanlog = national_mu, sdlog = national_sigma)

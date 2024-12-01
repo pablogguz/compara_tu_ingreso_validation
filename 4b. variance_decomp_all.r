@@ -27,6 +27,50 @@ lapply(packages_to_load, require, character=T)
 
 # ------------------------------- Load data -------------------------------
 
+# Create province to CCAA mapping
+ccaa_mapping <- data.frame(
+    prov_code = c(
+        "01", "20", "48", # País Vasco
+        "02", "13", "16", "19", "45", # Castilla-La Mancha
+        "28", # Madrid
+        "03", "12", "46", # Comunidad Valenciana
+        "04", "11", "14", "18", "21", "23", "29", "41", # Andalucía
+        "05", "09", "24", "34", "37", "40", "42", "47", "49", # Castilla y León
+        "06", "10", # Extremadura
+        "07", # Baleares
+        "08", "17", "25", "43", # Cataluña
+        "15", "27", "32", "36", # Galicia
+        "22", "44", "50", # Aragón
+        "26", # La Rioja
+        "30", # Murcia
+        "31", # Navarra
+        "33", # Asturias
+        "35", "38", # Canarias
+        "39", # Cantabria
+        "51", "52" # Ceuta y Melilla
+    ),
+    ccaa_name = c(
+        rep("Basque Country", 3),            # País Vasco 
+        rep("Castile-La Mancha", 5),         # Castilla-La Mancha
+        "Madrid",                            # Madrid
+        rep("Valencian Community", 3),       # Comunidad Valenciana
+        rep("Andalusia", 8),                 # Andalucía
+        rep("Castile and Leon", 9),          # Castilla y León
+        rep("Extremadura", 2),               # Extremadura
+        "Balearic Islands",                  # Baleares
+        rep("Catalonia", 4),                 # Cataluña
+        rep("Galicia", 4),                   # Galicia
+        rep("Aragon", 3),                    # Aragón
+        "La Rioja",                          # La Rioja
+        "Murcia",                            # Murcia 
+        "Navarre",                           # Navarra
+        "Asturias",                          # Asturias
+        rep("Canary Islands", 2),            # Canarias
+        "Cantabria",                         # Cantabria
+        rep("Ceuta and Melilla", 2)          # Ceuta y Melilla
+    )
+)
+
 # Load atlas data
 atlas_all <- merge(
     setDT(ineAtlas::get_atlas("income", "tract")),
