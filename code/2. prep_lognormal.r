@@ -76,6 +76,18 @@ all_gini <- gini_observed %>%
     bind_rows(gini_predicted) %>%
     distinct(tract_code, .keep_all = TRUE)
 
+# Calculate number of municipalities with non-missing income data 
+num_unique_mun <- atlas_all %>% 
+    filter(!is.na(net_income_equiv)) %>% 
+    pull(mun_code) %>% 
+    unique() %>% 
+    length()
+
+print(paste("Number of unique municipalities with non-missing income data:", num_unique_mun))
+unique(atlas_all$mun_code)
+
+length(unique(atlas_all$mun_code))
+
 # Merge everything
 atlas_year <- merge(atlas_all, all_gini, by = "tract_code", all.x = TRUE)
 
