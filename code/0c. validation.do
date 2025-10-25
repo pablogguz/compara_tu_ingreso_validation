@@ -43,7 +43,7 @@ This do-file: generates validation plots
         xtitle("`: var lab net_income_equiv'") ///
         ytitle("`: var lab expected_mean'") polyreg(1) ///
         ttext(38000 15000 "R² = `: display %6.3f `r2''") ///
-        ttext(36000 15000 "β = `: display %6.3f `beta''") ///
+        ttext(35500 15000 "β = `: display %6.3f `beta''") ///
         bycolors(midblue%50) polyregplotopt(lcolor(midblue%50) lwidth(0.5)) ///
         dotsplotopt(msize(1)) ///
         xlab(, format(%12.0gc)) ylab(, format(%12.0gc))
