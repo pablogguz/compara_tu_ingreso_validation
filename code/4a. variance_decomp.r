@@ -51,7 +51,7 @@ ccaa_mapping <- data.frame(
         "02", "13", "16", "19", "45", # Castilla-La Mancha
         "28", # Madrid
         "03", "12", "46", # Comunidad Valenciana
-        "04", "11", "14", "18", "21", "23", "29", "41", # Andalucía
+        "04", "11", "16", "18", "21", "23", "29", "41", # Andalucía
         "05", "09", "24", "34", "37", "40", "42", "47", "49", # Castilla y León
         "06", "10", # Extremadura
         "07", # Baleares
@@ -193,10 +193,10 @@ p <- ggplot(plot_data,
        base_family = "Open Sans"
    ) +
    theme(  
-       text = element_text(size = 14, color = "black"),
+       text = element_text(size = 16, color = "black"),
        axis.text = element_text(color = "black"),
        axis.title = element_text(color = "black"),
-       legend.text = element_text(size = 10, color = "black"),  
+       legend.text = element_text(size = 12, color = "black"),  
        legend.position = "top",
        legend.justification = c(0, 1),
        legend.background = element_rect(fill = "white", color = NA),
