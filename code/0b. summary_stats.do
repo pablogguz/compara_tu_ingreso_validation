@@ -46,7 +46,7 @@ This do-file: generates summary stats
 
 **# Code for table
     cap file close fh
-	file open fh using "${output}\summary_stats.tex", write replace
+	file open fh using "${output}\summary_stats_2023.tex", write replace
 		file write fh _n  "\begin{tabular}{@{}lccccc@{}}"
 		file write fh _n "\toprule" 
 		file write fh _n  "" " " " & " "(1)" " & " "(2)" " & " "(3)" " & " " (4)" " & " " (5) " "\\"
