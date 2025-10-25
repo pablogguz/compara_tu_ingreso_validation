@@ -16,7 +16,7 @@ This repository contains the scripts and methodological documentation used to va
 
 | File name | Description | Input data required | Output |
 |-----------|-------------|---------------------|---------|
-| `0a. calculate_lognormal.r` | Example of how to calculate log-normal mixture, save `.dta` file for summary stats and validation | ADRH tract data | `data-raw/atlas_all.dta` |
+| `0a. calculate_lognormal.r` | Example of how to calculate log-normal mixture, save `.dta` file for summary stats | ADRH tract data | `data-raw/atlas_all.dta` |
 | `0b. summary_stats.do` | Summary statistics | ADRH data | `output/summary_stats.tex` |
 | `0c. validation.do` | Validation metrics | ADRH data | `output/binned_scatter_p80p20.png`, `output/binned_scatter_median.png` |
 | `1. predict_gini_ml.r` | Implements ML model to predict missing Gini coefficients | ADRH tract data, demographic variables | `gini_predicted.fst` |

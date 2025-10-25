@@ -91,15 +91,22 @@ print(missing_percent)
 print("Calculating log-normal parameters...")
 
 atlas_params <- atlas_year %>%
-    filter(!is.na(gini) & !is.na(net_income_equiv) & !is.na(population)) %>%
-    mutate(
-        # Get sigma from Gini (using relationship for log-normal distribution)
-        sigma = sqrt(2) * qnorm((gini/100 + 1)/2),
-        # Get mu to preserve mean
-        mu = log(net_income_equiv) - sigma^2/2,
-        # Population weights
-        weight = population/sum(population)
-    )
+  # keep if we have Gini, population, and either median OR mean available
+  filter(!is.na(gini), !is.na(population),
+         !is.na(median_income_equiv) | !is.na(net_income_equiv)) %>%
+  mutate(
+    # sigma from Gini (lognormal mapping)
+    sigma = sqrt(2) * qnorm((gini/100 + 1)/2),
+
+    # mu from median when available; otherwise from mean (exact lognormal identity)
+    mu = if_else(!is.na(median_income_equiv) & median_income_equiv > 0,
+                 log(median_income_equiv),
+                 log(net_income_equiv) - (sigma^2)/2
+    ),
+
+    # population weights (national share)
+    weight = population / sum(population)
+  )
 
 #-------------------------------------------------------------
 # 3. Calculate national density curve
@@ -217,8 +224,6 @@ provincial_percentiles <- atlas_params %>%
     mutate(prov_code = unique(atlas_params$prov_code)) %>%
     data.table::transpose(keep.names = "percentile", make.names = "prov_code")
 
-print("Calculating municipality-level percentiles...")
-
 # Calculate municipality-level percentiles
 mun_percentiles <- atlas_params %>%
     group_by(mun_code) %>%
@@ -292,8 +297,8 @@ print(paste("Income range:", min(nat$value), "to", max(nat$value)))
 density_data <- read_fst("data/density_curve.fst")
 
 # Plot for verification
-ggplot(density_data, aes(x = x, y = y)) +
-    geom_line() +
-    labs(x = "Income", y = "Density",
-         title = "Income Distribution (Log-Normal Mixture)") +
-    theme_minimal()
+# ggplot(density_data, aes(x = x, y = y)) +
+#     geom_line() +
+#     labs(x = "Income", y = "Density",
+#          title = "Income Distribution (Log-Normal Mixture)") +
+#     theme_minimal()

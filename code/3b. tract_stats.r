@@ -189,7 +189,7 @@ for(prov in provinces) {
     prov_geoms <- tract_geoms_with_codes %>%
         filter(prov_code == prov) %>%
         st_simplify(dTolerance = 1) %>%
-        st_transform(4326)
+        sf::st_transform(4326)
     
     saveRDS(prov_geoms, sprintf("data/tract_geoms/tracts_%s.rds", prov))
     
