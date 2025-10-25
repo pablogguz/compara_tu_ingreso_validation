@@ -1,7 +1,7 @@
 
-I begin by validating the log-normality assumption at the tract level. Figure \ref{fig:median} examines the fit for median income, comparing observed values with those predicted under log-normality for each census tract, where observations are grouped into equal-sized bins using binscatter methods.\footnote{See \cite{cattaneo}.} The relationship is remarkably strong ($\beta$ = 0.98, $R^2$ = 0.98), with predicted values differing from observed ones by just 4.6\% on average. The near-unit slope coefficient and $R^2$ indicate that log-normality captures the central tendency of the income distribution particularly well.
+\paragraph{Validation} I begin by validating the log-normality assumption at the tract level. Figure \ref{fig:median} examines the fit for median income, comparing observed values with those predicted under log-normality for each census tract, where observations are grouped into equal-sized bins using binscatter methods.\footnote{See \cite{cattaneo}.} The relationship is remarkably strong ($\beta$ = 0.98, $R^2$ = 0.98), with predicted values differing from observed ones by just 4.6\% on average. The near-unit slope coefficient and $R^2$ indicate that log-normality captures the central tendency of the income distribution particularly well.
 
-Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regression yields a slope coefficient of 0.75 ($R^2$ = 0.81), with predicted values deviating from observed ones by 5\% on average. Consistent with the fact that real income distributions tend to have heavier tails, the coefficient below unity suggests that the log-normal distribution slightly underestimates inequality.
+Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regression yields a slope coefficient of 0.77 ($R^2$ = 0.82), with predicted values deviating from observed ones by 5\% on average. Consistent with the fact that real income distributions tend to have heavier tails, the coefficient below unity suggests that the log-normal distribution slightly underestimates inequality.
 
 %Next, I show how the mixture approach generates substantial differences between the distribution implied solely by tract means -- where everyone within a tract is assumed to have the same income -- and the estimated individual-level distribution. Figure \ref{fig:distributions} plots both distributions for net equivalised income in 2022. The tract-level distribution (in dark blue) exhibits higher kurtosis and is more concentrated around its mode of approximately €20,000, as it collapses all within-tract variation to a single point. In contrast, the estimated individual distribution shows greater dispersion and a lower mode, reflecting the within-tract inequality captured by the mixture of log-normal local distributions. The heavier left tail and more gradual right tail of the mixture distribution suggest that a simple aggregation of tract means would vastly understate income inequality, particularly by failing to account for the substantial mass of low-income households and the long right tail of high earners.
 
@@ -10,7 +10,7 @@ Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regres
 \captionsetup{justification=centering}
 \caption{Validation of log-normality: median income}
 \label{fig:median}
-\includegraphics[width=0.85\textwidth]{output/binned_scatter_median.png}
+\includegraphics[width=0.85\textwidth]{output/binned_scatter_median_2023.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure shows a binned scatter plot comparing observed median income with predicted values under the log-normal assumption for each census tract. Source: Spanish Statistical Office and author's calculations.
@@ -22,7 +22,7 @@ Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regres
 \captionsetup{justification=centering}
 \caption{Validation of log-normality: P80/P20 ratio}
 \label{fig:p80p20}
-\includegraphics[width=0.85\textwidth]{output/binned_scatter_p80p20.png}
+\includegraphics[width=0.85\textwidth]{output/binned_scatter_p80p20_2023.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure shows a binned scatter plot comparing observed P80/P20 ratios with predicted values under the log-normal assumption for each census tract. Source: Spanish Statistical Office and author's calculations.
@@ -41,20 +41,20 @@ Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regres
 % \end{fignotes2}
 % \end{figure}
 
-A natural question arises: to what extent does exploiting local-level heterogeneity through a mixture of tract-specific distributions improve our measurement of the national income distribution compared to a simpler log-normal approximation? The comparison shown in Figure \ref{fig:dist2} reveals a striking finding: despite incorporating rich geographic variation in both average income and inequality metrics, the mixture distribution is remarkably similar to a single log-normal distribution fitted using only the national-level average income and Gini coefficient derived from household survey data (EU-SILC). This pattern aligns with previous evidence showing that log-normal densities approximate very well the empirical distribution of per capita income in large cross-country panels \citep{lopez2006normal}. In contexts where more granular data is not available, these results suggest that assuming log-normality at the national level might remain an accurate approximation for capturing the overall shape of the income distribution.
+% A natural question arises: to what extent does exploiting local-level heterogeneity through a mixture of tract-specific distributions improve our measurement of the national income distribution compared to a simpler log-normal approximation? The comparison shown in Figure \ref{fig:dist2} reveals a striking finding: despite incorporating rich geographic variation in both average income and inequality metrics, the mixture distribution is remarkably similar to a single log-normal distribution fitted using only the national-level average income and Gini coefficient derived from household survey data (EU-SILC). This pattern aligns with previous evidence showing that log-normal densities approximate very well the empirical distribution of per capita income in large cross-country panels \citep{lopez2006normal}. In contexts where more granular data is not available, these results suggest that assuming log-normality at the national level might remain an accurate approximation for capturing the overall shape of the income distribution.
 
-\begin{figure}[H]
-\begin{center}
-\captionsetup{justification=centering}
-\caption{Estimated mixture vs. national log-normal}\label{fig:dist2}
-\includegraphics[width=0.85\textwidth]{output/tract_vs_national_income_distribution.png}
-\end{center}
-\begin{fignotes2}
-\textbf{Notes:} This figure compares the income distribution derived from a mixture of tract-level log-normal distributions (navy) with a single national-level log-normal distribution (light blue). The mixture distribution is constructed using tract-specific log-normal distributions, where the parameters of each component are derived from observed tract means and Gini coefficients, and mixture weights correspond to tract population shares. The parameters for the national log-normal are given by the national-level mean income and Gini coefficient from EU-SILC 2023. Data refers to year 2022. Source: Spanish Statistical Office and author's calculations.
-\end{fignotes2}
-\end{figure}
+% \begin{figure}[H]
+% \begin{center}
+% \captionsetup{justification=centering}
+% \caption{Estimated mixture vs. national log-normal}\label{fig:dist2}
+% \includegraphics[width=0.85\textwidth]{output/tract_vs_national_income_distribution.png}
+% \end{center}
+% \begin{fignotes2}
+% \textbf{Notes:} This figure compares the income distribution derived from a mixture of tract-level log-normal distributions (navy) with a single national-level log-normal distribution (light blue). The mixture distribution is constructed using tract-specific log-normal distributions, where the parameters of each component are derived from observed tract means and Gini coefficients, and mixture weights correspond to tract population shares. The parameters for the national log-normal are given by the national-level mean income and Gini coefficient from EU-SILC 2023. Data refers to year 2022. Source: Spanish Statistical Office and author's calculations.
+% \end{fignotes2}
+% \end{figure}
 
-To better understand this result, I examine the spatial structure of income inequality in Spain through a hierarchical variance decomposition exercise. Specifically, I decompose the total variance of log income within each autonomous community $c$  into components corresponding to different geographic levels as follows:
+\paragraph{Decomposing income inequality} I examine the spatial structure of income inequality in Spain through a hierarchical variance decomposition exercise. Specifically, I decompose the total variance of log income within each autonomous community $c$  into components corresponding to different geographic levels as follows:
 
 \begin{equation}\label{decomp}
 \sigma^2_{c} = 
