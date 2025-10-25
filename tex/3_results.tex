@@ -10,7 +10,7 @@ Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regres
 \captionsetup{justification=centering}
 \caption{Validation of log-normality: median income}
 \label{fig:median}
-\includegraphics[width=0.7\textwidth]{output/binned_scatter_median.png}
+\includegraphics[width=0.85\textwidth]{output/binned_scatter_median.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure shows a binned scatter plot comparing observed median income with predicted values under the log-normal assumption for each census tract. Source: Spanish Statistical Office and author's calculations.
@@ -22,7 +22,7 @@ Figure \ref{fig:median} shows the relationship for the P80/P20 ratio. The regres
 \captionsetup{justification=centering}
 \caption{Validation of log-normality: P80/P20 ratio}
 \label{fig:p80p20}
-\includegraphics[width=0.7\textwidth]{output/binned_scatter_p80p20.png}
+\includegraphics[width=0.85\textwidth]{output/binned_scatter_p80p20.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure shows a binned scatter plot comparing observed P80/P20 ratios with predicted values under the log-normal assumption for each census tract. Source: Spanish Statistical Office and author's calculations.
@@ -47,7 +47,7 @@ A natural question arises: to what extent does exploiting local-level heterogene
 \begin{center}
 \captionsetup{justification=centering}
 \caption{Estimated mixture vs. national log-normal}\label{fig:dist2}
-\includegraphics[width=0.77\textwidth]{output/tract_vs_national_income_distribution.png}
+\includegraphics[width=0.85\textwidth]{output/tract_vs_national_income_distribution.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure compares the income distribution derived from a mixture of tract-level log-normal distributions (navy) with a single national-level log-normal distribution (light blue). The mixture distribution is constructed using tract-specific log-normal distributions, where the parameters of each component are derived from observed tract means and Gini coefficients, and mixture weights correspond to tract population shares. The parameters for the national log-normal are given by the national-level mean income and Gini coefficient from EU-SILC 2023. Data refers to year 2022. Source: Spanish Statistical Office and author's calculations.
@@ -56,7 +56,7 @@ A natural question arises: to what extent does exploiting local-level heterogene
 
 To better understand this result, I examine the spatial structure of income inequality in Spain through a hierarchical variance decomposition exercise. Specifically, I decompose the total variance of log income within each autonomous community $c$  into components corresponding to different geographic levels as follows:
 
-\begin{equation}
+\begin{equation}\label{decomp}
 \sigma^2_{c} = 
 \underbrace{\sum_{j} w_j \sigma^2_{j}}_{\text{Within-tract}} + 
 \underbrace{\sum_{k \in c} \sum_{j \in k} w_j \big( \mu_{j} - \mu_{k} \big)^2}_{\text{Between-tract}} + 
@@ -75,9 +75,9 @@ This predominance of within-tract variation provides intuition for why the mixtu
 \captionsetup{justification=centering}
 \caption{Variance decomposition}
 \label{fig:variance_decomp}
-\includegraphics[width=0.7\textwidth]{output/variance_decomp.png}
+\includegraphics[width=0.85\textwidth]{output/variance_decomp.png}
 \end{center}
 \begin{fignotes2}
-\textbf{Notes:} This figure shows the decomposition of total variance in log income into four components: within-tract, between-tract (within municipality), between-municipality (within province), and between-province variation. The within-tract component is calculated assuming log-normality within tracts, while the remaining components are computed using population-weighted variance decomposition. Regions are ordered by total population. Source: Spanish Statistical Office and author's calculations.
+\textbf{Notes:} This figure shows the decomposition described in Equation \ref{decomp} whereby total variance in log income is broken down into four components: within-tract, between-tract (within municipality), between-municipality (within province), and between-province variation. The within-tract component is calculated assuming log-normality within tracts. Regions are ordered by total population. Source: Spanish Statistical Office and author's calculations.
 \end{fignotes2}
 \end{figure}
