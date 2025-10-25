@@ -1,4 +1,3 @@
-
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
 #* Project: validation metrics for www.comparatuingreso.es
@@ -173,8 +172,13 @@ plot_data <- variance_decomp %>%
 plot_data <- plot_data %>%
     drop_na()
 
+# Create ordering based on within tract share
+within_tract_order <- variance_decomp %>%
+    arrange(within_tract_share) %>%
+    pull(ccaa_name)
+
 p <- ggplot(plot_data, 
-      aes(x = reorder(ccaa_name, population), 
+      aes(x = factor(ccaa_name, levels = within_tract_order), 
           y = share, 
           fill = component)) +
    geom_bar(stat = "identity") +
@@ -182,15 +186,17 @@ p <- ggplot(plot_data,
    scale_fill_brewer(palette = "Blues", direction = -1) +
    labs(
        x = "",
-       y = "Share of total variance (%)",
+       y = "Per cent of total variance",
        fill = ""
    ) +
    theme_minimal(
        base_family = "Open Sans"
    ) +
    theme(  
-       text = element_text(size = 14),
-       legend.text = element_text(size = 10),  
+       text = element_text(size = 14, color = "black"),
+       axis.text = element_text(color = "black"),
+       axis.title = element_text(color = "black"),
+       legend.text = element_text(size = 10, color = "black"),  
        legend.position = "top",
        legend.justification = c(0, 1),
        legend.background = element_rect(fill = "white", color = NA),
