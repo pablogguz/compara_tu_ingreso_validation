@@ -68,7 +68,7 @@ check_data <- known_tracts %>%
         expected_mean = exp(mu + 0.5 * sigma^2),
         # Relative difference
         rel_diff_p8p20 = abs(p80p20 - expected_p80p20)/p80p20,
-        rel_diff_mean = abs(net_income_equiv - expected_mean)/median_income_equiv
+        rel_diff_mean = abs(net_income_equiv - expected_mean)/net_income_equiv
     )
 
 # Save expected values 
