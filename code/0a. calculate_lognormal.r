@@ -33,10 +33,10 @@ atlas_all <- merge(
     setDT(ineAtlas::get_atlas("income", "tract")),
     setDT(ineAtlas::get_atlas("demographics", "tract"))
 ) %>%
-    filter(year == 2022)
+    filter(year == 2023)
 
 gini <- setDT(ineAtlas::get_atlas("gini_p80p20", "tract")) %>%
-    filter(year == 2022) %>%
+    filter(year == 2023) %>%
     select(tract_code, gini, p80p20)
 
 atlas_all <- merge(atlas_all, gini, by = "tract_code")

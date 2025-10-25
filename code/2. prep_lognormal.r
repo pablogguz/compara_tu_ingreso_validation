@@ -1,6 +1,7 @@
+
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
-#* Project: validation metrics for www.comparatuingreso.es
+#* Project: validation metrics for www.comaparatuingreso.es
 #* This script: prepares the data for the app using log-normal
 #*  assumption within tracts
 #-------------------------------------------------------------
@@ -23,8 +24,7 @@ package.check <- lapply(
 )
 
 lapply(packages_to_load, require, character=T)
-
-#-------------------------------------------------------------
+#-------------------------------------------------------------------
 
 #-------------------------------------------------------------
 # 1. Load and merge data
@@ -36,7 +36,7 @@ atlas_all <- merge(
     setDT(ineAtlas::get_atlas("income", "tract")),
     setDT(ineAtlas::get_atlas("demographics", "tract"))
 ) %>%
-    filter(year == 2022)
+    filter(year == 2023)
 
 # Impute missing net_income_equiv values
 atlas_all <- atlas_all %>%
@@ -65,7 +65,7 @@ print(paste0(
 
 # Load Gini data and predictions
 gini_observed <- setDT(ineAtlas::get_atlas("gini_p80p20", "tract")) %>%
-    filter(year == 2022) %>%
+    filter(year == 2023) %>%
     select(tract_code, gini) %>%
     drop_na()
 
@@ -75,18 +75,6 @@ gini_predicted <- read_fst("data-raw/gini_predicted.fst")
 all_gini <- gini_observed %>%
     bind_rows(gini_predicted) %>%
     distinct(tract_code, .keep_all = TRUE)
-
-# Calculate number of municipalities with non-missing income data 
-num_unique_mun <- atlas_all %>% 
-    filter(!is.na(net_income_equiv)) %>% 
-    pull(mun_code) %>% 
-    unique() %>% 
-    length()
-
-print(paste("Number of unique municipalities with non-missing income data:", num_unique_mun))
-unique(atlas_all$mun_code)
-
-length(unique(atlas_all$mun_code))
 
 # Merge everything
 atlas_year <- merge(atlas_all, all_gini, by = "tract_code", all.x = TRUE)
@@ -143,18 +131,18 @@ write_fst(density_points, "data/density_curve.fst")
 print("Calculating provincial density curves...")
 
 provincial_density_data <- atlas_params %>%
-    group_by(prov_code) %>%
-    group_map(function(data, group) {
-        # Recalculate weights within province
-        data$weight <- data$population/sum(data$population)
-        # Calculate provincial density
-        data.frame(
-            prov_code = group$prov_code,
-            x = x_grid,
-            y = mixture_density(x_grid, data)
-        )
-    }) %>%
-    bind_rows()
+  group_by(prov_code) %>%
+  group_map(function(data, group) {
+    # Recalculate weights within province
+    data$weight <- data$population/sum(data$population)
+    # Calculate provincial density
+    data.frame(
+      prov_code = group$prov_code,
+      x = x_grid,
+      y = mixture_density(x_grid, data)
+    )
+  }) %>%
+  bind_rows()
 
 write_fst(provincial_density_data, "data/density_curve_prov.fst")
 
@@ -164,29 +152,29 @@ write_fst(provincial_density_data, "data/density_curve_prov.fst")
 print("Calculating provincial density curves...")
 
 mun_density_data <- atlas_params %>%
-    group_by(mun_code) %>%
-    group_map(function(data, group) {
-        # Recalculate weights within province
-        data$weight <- data$population/sum(data$population)
-        # Calculate provincial density
-        data.frame(
-            mun_code = group$mun_code,
-            prov_code = group$prov_code,
-            x = x_grid,
-            y = mixture_density(x_grid, data)
-        )
-    }) %>%
-    bind_rows()
+  group_by(mun_code, prov_code) %>%
+  group_map(function(data, group) {
+    # Recalculate weights within province
+    data$weight <- data$population/sum(data$population)
+    # Calculate provincial density
+    data.frame(
+      mun_code = group$mun_code,
+      prov_code = group$prov_code,
+      x = x_grid,
+      y = mixture_density(x_grid, data)
+    )
+  }) %>%
+  bind_rows()
 
 dir.create("data/density_curve_mun", showWarnings = FALSE)
 
 # Save municipality-level density curves by province
 mun_density_data %>%
-    group_by(prov_code) %>%
-    group_walk(function(data, group) {
-        file_path <- paste0("data/density_curve_mun/mun_", group$prov_code, ".fst")
-        write_fst(data, file_path)
-    })
+  group_by(prov_code) %>%
+  group_walk(function(data, group) {
+    file_path <- paste0("data/density_curve_mun/mun_", group$prov_code, ".fst")
+    write_fst(data, file_path)
+  })
 
 #-------------------------------------------------------------
 # 5. Calculate percentiles
@@ -229,6 +217,44 @@ provincial_percentiles <- atlas_params %>%
     mutate(prov_code = unique(atlas_params$prov_code)) %>%
     data.table::transpose(keep.names = "percentile", make.names = "prov_code")
 
+print("Calculating provincial-level percentiles...")
+
+# Calculate provincial percentiles
+provincial_percentiles <- atlas_params %>%
+    group_by(prov_code) %>%
+    group_map(function(data, group) {
+        # Recalculate weights within province
+        data$weight <- data$population/sum(data$population)
+        # Calculate percentiles
+        setNames(
+            as.list(sapply(seq(0.01, 0.99, 0.01), 
+                          function(p) mixture_quantile(p, data))),
+            paste0("p", 1:99)
+        )
+    }) %>%
+    bind_rows() %>%
+    mutate(prov_code = unique(atlas_params$prov_code)) %>%
+    data.table::transpose(keep.names = "percentile", make.names = "prov_code")
+
+print("Calculating municipality-level percentiles...")
+
+# Calculate municipality-level percentiles
+mun_percentiles <- atlas_params %>%
+    group_by(mun_code) %>%
+    group_map(function(data, group) {
+        # Recalculate weights within municipality
+        data$weight <- data$population/sum(data$population)
+        # Calculate percentiles
+        setNames(
+            as.list(sapply(seq(0.01, 0.99, 0.01), 
+                          function(p) mixture_quantile(p, data))),
+            paste0("p", 1:99)
+        )
+    }) %>%
+    bind_rows() %>%
+    mutate(mun_code = unique(atlas_params$mun_code)) %>%
+    data.table::transpose(keep.names = "percentile", make.names = "mun_code")
+
 #-------------------------------------------------------------
 # 6. Create municipality lookup
 #-------------------------------------------------------------
@@ -248,6 +274,7 @@ print("Saving files...")
 
 write_fst(national_percentiles, "data/national_percentiles.fst")
 write_fst(provincial_percentiles, "data/provincial_percentiles.fst")
+write_fst(mun_percentiles, "data/mun_percentiles.fst")
 write_fst(municipality_lookup, "data/municipality_lookup.fst")
 
 #-------------------------------------------------------------

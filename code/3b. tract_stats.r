@@ -31,7 +31,7 @@ atlas_income <- merge(
     setDT(ineAtlas::get_atlas("income", "tract")),
     setDT(ineAtlas::get_atlas("demographics", "tract"))
 ) %>%
-    filter(year == 2022) %>%
+    filter(year == 2023) %>%
     select(
         tract_code, mun_code, prov_code,
         prov_name, mun_name, net_income_equiv, 
@@ -56,7 +56,7 @@ atlas_income_sources <- get_atlas(
     "income_sources",
     level = "tract"
 ) %>%
-    filter(year == 2021) %>%
+    filter(year == 2023) %>%
     select(tract_code, wage, pension)
 
 # ---------------------------- Census ------------------------------- #
@@ -147,7 +147,7 @@ tract_lookup <- tracts_stats %>%
 write.fst(tract_lookup, "data/tract_lookup.fst")
 
 # Load tract geometries 
-tract_geoms <- get_tract_geom(2022)
+tract_geoms <- get_tract_geom(2023)
 
 tract_geoms_codes <- tract_geoms %>% 
     as.data.frame() %>%

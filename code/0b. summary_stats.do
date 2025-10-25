@@ -93,7 +93,7 @@ This do-file: generates summary stats
 
         file write fh _n "\end{tabular}"
         file close fh
-        type "${output}\summary_stats.tex"
+        type "${output}\summary_stats_2023.tex"
         
         
         
