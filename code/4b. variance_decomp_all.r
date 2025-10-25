@@ -1,4 +1,3 @@
-
 #-------------------------------------------------------------
 #* Author: Pablo Garcia Guzman
 #* Project: validation metrics for www.comparatuingreso.es
@@ -22,8 +21,15 @@ package.check <- lapply(
   }
 )
 
-lapply(packages_to_load, require, character=T)
-#-------------------------------------------------------------------
+lapply(packages_to_load, require, character.only = TRUE)
+
+# ------------------------------- Helpers -------------------------------
+
+# Population-weighted (population) variance (no Bessel correction)
+weighted.var <- function(x, w) {
+  mu <- weighted.mean(x, w)
+  sum(w * (x - mu)^2) / sum(w)
+}
 
 # ------------------------------- Load data -------------------------------
 
@@ -76,67 +82,74 @@ atlas_all <- merge(
     setDT(ineAtlas::get_atlas("income", "tract")),
     setDT(ineAtlas::get_atlas("demographics", "tract"))
 ) %>%
+    as_tibble() %>%
     filter(year == 2022)
 
 gini <- setDT(ineAtlas::get_atlas("gini_p80p20", "tract")) %>%
+    as_tibble() %>%
     filter(year == 2022) %>%
     select(tract_code, gini, p80p20)
 
-atlas_all <- merge(atlas_all, gini, by = "tract_code")
+atlas_all <- atlas_all %>%
+    left_join(gini, by = "tract_code")
 
-# Create a weighted variance function
-weighted.var <- function(x, w) {
-    sum(w * (x - weighted.mean(x, w))^2) / sum(w)
-}
+# ------------------------------- Prepare tract moments -------------------------------
+
+# Using median to get mu_log; Gini -> sigma; within_var = sigma^2
+atlas_all <- atlas_all %>%
+    filter(!is.na(median_income_equiv),
+           !is.na(population),
+           !is.na(gini)) %>%
+    mutate(
+        # For a lognormal, G = 2*Phi(sigma/sqrt(2)) - 1  =>  sigma = sqrt(2)*qnorm((G+1)/2)
+        sigma       = sqrt(2) * qnorm((gini/100 + 1)/2),
+        within_var  = sigma^2,
+        # Median = exp(mu) → mu = log(median)
+        mu_log      = log(median_income_equiv)
+    )
 
 # ------------------------------- National-level Decomposition -------------------------------
 
 national_decomp <- atlas_all %>%
-    filter(
-        !is.na(net_income_equiv) & 
-        !is.na(population)
-    ) %>%
     # Add CCAA information
     left_join(ccaa_mapping, by = "prov_code") %>%
-    mutate(
-        log_income = log(net_income_equiv),
-        # Calculate sigma from Gini for within-tract variance
-        sigma = sqrt(2) * qnorm((gini / 100 + 1) / 2),
-        within_var = sigma^2
-    ) %>%
-    # Calculate means at each level
+    # Calculate means at each level with population weights
     group_by(prov_code) %>%
-    mutate(prov_mean = weighted.mean(log_income, population)) %>%
+    mutate(prov_mean = weighted.mean(mu_log, population)) %>%
+    ungroup() %>%
     group_by(ccaa_name) %>%
-    mutate(ccaa_mean = weighted.mean(log_income, population)) %>%
+    mutate(ccaa_mean = weighted.mean(mu_log, population)) %>%
     ungroup() %>%
     group_by(mun_code) %>%
-    mutate(mun_mean = weighted.mean(log_income, population)) %>%
+    mutate(mun_mean = weighted.mean(mu_log, population)) %>%
     ungroup() %>%
     # Summarise for national decomposition
     summarise(
         # Print diagnostics
         n = n(),
-        mean_log_income = mean(log_income),
-        mean_within_var = mean(within_var),
+        mean_mu_log = weighted.mean(mu_log, population),
+        mean_within_var = weighted.mean(within_var, population),
         
-        # Total variance (now correctly including within-tract component)
-        total_var = weighted.var(log_income, population) + weighted.mean(within_var, population),
+        # total between (Var[E[log Y | tract]])
+        between_total = weighted.var(mu_log, population),
         
         # Between communities variance 
         between_ccaa = weighted.var(ccaa_mean, population),
         
         # Between provinces variance (within Autonomous Communities)
-        between_prov = weighted.var(prov_mean, population) -  weighted.var(ccaa_mean, population),
+        between_prov = weighted.var(prov_mean, population) - between_ccaa,
 
         # Between municipalities (within provinces)
         between_mun = weighted.var(mun_mean, population) - weighted.var(prov_mean, population),
         
         # Between tracts (within municipalities)
-        between_tract = weighted.var(log_income, population) - weighted.var(mun_mean, population),
+        between_tract = between_total - weighted.var(mun_mean, population),
         
         # Within tract
         within_tract = weighted.mean(within_var, population),
+        
+        # total variance
+        total_var = within_tract + between_total,
         
         # Population for sorting
         population = sum(population)
@@ -157,4 +170,4 @@ print(national_decomp)
 national_decomp %>%
     select(ends_with("share")) %>%
     mutate(across(where(is.numeric), round, 1)) %>%
-    pivot_longer(cols = everything(), names_to = "variance_component", values_to = "share") 
+    pivot_longer(cols = everything(), names_to = "variance_component", values_to = "share")
