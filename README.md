@@ -27,11 +27,13 @@ This repository contains the scripts and methodological documentation used to va
 | `4b. variance_decomp_all.r` | Calculates hierarchical variance decomposition (national level) | ADRH data | Figures for the text in the methodological note |
 | `5. mixture_vs_national.r` | Compares mixture vs. national log-normal | ADRH data | `tract_vs_national_income_distribution` |
 
-All necessary packages will be installed automatically when running the R scripts. For `ineAtlas`, you will need to install the development version from GitHub:
+All necessary packages will be installed automatically when running the R scripts. 
+
+<!-- For `ineAtlas`, you will need to install the development version from GitHub:
 
 ```r
 pak::pak("pablogguz/ineAtlas")
-```
+``` -->
 
 The do-files require the `estout` and `binsreg` packages. If you don't have them installed, you can do so by running:
 
