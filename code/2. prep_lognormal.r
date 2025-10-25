@@ -217,25 +217,6 @@ provincial_percentiles <- atlas_params %>%
     mutate(prov_code = unique(atlas_params$prov_code)) %>%
     data.table::transpose(keep.names = "percentile", make.names = "prov_code")
 
-print("Calculating provincial-level percentiles...")
-
-# Calculate provincial percentiles
-provincial_percentiles <- atlas_params %>%
-    group_by(prov_code) %>%
-    group_map(function(data, group) {
-        # Recalculate weights within province
-        data$weight <- data$population/sum(data$population)
-        # Calculate percentiles
-        setNames(
-            as.list(sapply(seq(0.01, 0.99, 0.01), 
-                          function(p) mixture_quantile(p, data))),
-            paste0("p", 1:99)
-        )
-    }) %>%
-    bind_rows() %>%
-    mutate(prov_code = unique(atlas_params$prov_code)) %>%
-    data.table::transpose(keep.names = "percentile", make.names = "prov_code")
-
 print("Calculating municipality-level percentiles...")
 
 # Calculate municipality-level percentiles
@@ -258,6 +239,7 @@ mun_percentiles <- atlas_params %>%
 #-------------------------------------------------------------
 # 6. Create municipality lookup
 #-------------------------------------------------------------
+
 print("Creating municipality lookup...")
 
 municipality_lookup <- atlas_year %>%
