@@ -25,7 +25,6 @@ This repository contains the scripts and methodological documentation used to va
 | `3b. tract_stats.r` | Processes tract-level statistics | ADRH tract data, Census tract data | Tract-level statistics |
 | `4a. variance_decomp.r` | Calculates hierarchical variance decomposition | ADRH data | `output/variance_decomp.png` |
 | `4b. variance_decomp_all.r` | Calculates hierarchical variance decomposition (national level) | ADRH data | Figures for the text in the methodological note |
-| `5. mixture_vs_national.r` | Compares mixture vs. national log-normal | ADRH data | `tract_vs_national_income_distribution` |
 
 All necessary packages will be installed automatically when running the R scripts. 
 
