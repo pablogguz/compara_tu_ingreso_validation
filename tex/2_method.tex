@@ -17,47 +17,53 @@ However, while providing a good approximation for much of the income distributio
 
 I estimate the national income distribution by exploiting the granular structure of census tract-level data and the theoretical properties of income distributions. My approach leverages the fact that income distributions within small geographic units tend to follow log-normal distributions more closely than in larger areas, and approximates the aggregate distribution using a mixture of these local-level distributions.
 
-Consider a census tract $j$ with an observed mean income $\mu_j$ and Gini coefficient $G_j$. Under the log-normality assumption, if income $Y$ follows a log-normal distribution with parameters $(\nu_j, \sigma_j^2)$, then:
+Consider a census tract $j$ with an observed \emph{median} income $\tilde m_j$ and Gini coefficient $G_j$. Under the log-normality assumption, if income $Y$ follows a log-normal distribution with parameters $(\nu_j, \sigma_j^2)$, then
 
 \begin{equation}
-\ln(Y) \sim N(\nu_j, \sigma_j^2)
+\ln(Y) \sim N(\nu_j, \sigma_j^2).
 \end{equation}
 
-The relationship between these parameters and the observed statistics is thus given by:
+The mapping between these parameters and observed statistics is:
 
 \begin{equation}
-\mu_j = \exp\left(\nu_j + \frac{\sigma_j^2}{2}\right)
+\tilde m_j = \exp(\nu_j),
 \end{equation}
 
 \begin{equation}
-G_j = 2\Phi\left(\frac{\sigma_j}{\sqrt{2}}\right) - 1
+G_j = 2\Phi\left(\frac{\sigma_j}{\sqrt{2}}\right) - 1,
 \end{equation}
 
-where $\Phi(\cdot)$ is the standard normal cumulative distribution function. From the observed Gini coefficient, I can recover $\sigma_j$:
+where $\Phi(\cdot)$ is the standard normal cumulative distribution function. From the observed Gini coefficient, I recover $\sigma_j$ as
 
 \begin{equation}
-\sigma_j = \sqrt{2}\Phi^{-1}\left(\frac{G_j + 1}{2}\right)
+\sigma_j = \sqrt{2}\,\Phi^{-1}\!\left(\frac{G_j + 1}{2}\right),
 \end{equation}
 
-Given $\sigma_j$ and $\mu_j$, the distribution for census tract $j$ is fully identified, as $\nu_j$ can be obtained analytically. I then estimate the national distribution as a population-weighted mixture of these local log-normal distributions. For a given income level $y$, the density is given by:
+and from the median I identify $\nu_j=\log \tilde m_j$. When the tract median is unavailable but the (equivalised) \emph{mean} income $\mu_j$ is observed, I use the exact log-normal relationship
 
 \begin{equation}
-f(y) = \sum_{j=1}^{J} w_j f_j(y|\nu_j,\sigma_j^2)
+\mu_j = \exp\!\left(\nu_j + \frac{\sigma_j^2}{2}\right)
+\quad\Rightarrow\quad
+\nu_j = \log \mu_j - \frac{\sigma_j^2}{2}.
 \end{equation}
 
-where $w_j$ is tract $j$'s population share and $f_j(\cdot|\nu_j,\sigma_j^2)$ is the log-normal density function with parameters $(\nu_j,\sigma_j^2)$.
-
-To calculate percentiles of the national distribution, I solve:
+I then estimate the national distribution as a population-weighted mixture of these local log-normal distributions. For a given income level $y$, the density is
 
 \begin{equation}
-p = F(q_p) = \sum_{j=1}^{J} w_j \Phi\left(\frac{\ln(q_p) - \nu_j}{\sigma_j}\right)
+f(y) = \sum_{j=1}^{J} w_j\, f_j(y \mid \nu_j,\sigma_j^2),
+\end{equation}
+
+where $w_j$ is tract $j$'s population share and $f_j(\cdot \mid \nu_j,\sigma_j^2)$ is the log-normal density. Percentiles of the national distribution are obtained by solving
+
+\begin{equation}
+p = F(q_p) = \sum_{j=1}^{J} w_j \,\Phi\!\left(\frac{\ln(q_p) - \nu_j}{\sigma_j}\right),
 \end{equation}
 
 where $q_p$ is the $p^{th}$ percentile and $F(\cdot)$ is the cumulative distribution function of the mixture. I use numerical root-finding methods to find the value of $q_p$ that satisfies $F(q_p) - p = 0$ within a bounded interval.
 
 %This approach has several advantages. First, it respects the theoretical properties of income distributions at local levels where populations are relatively homogeneous. Second, it preserves tract-level moments while allowing for heterogeneity across tracts. Third, it provides a flexible framework that can be adapted and extended to calculate any distributional statistic of interest.
 
-\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.5\% of the sample), I estimate them using a machine learning approach. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, mean logged equivalised income, mean household size, population size, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure, and is trained using default hyperparameters without grid search or additional tuning. For comparison, I also estimate a baseline OLS model using the same set of predictors. Out-of-sample prediction errors under both approaches are shown in Table \ref{perf}. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model, as illustrated by a 6\% lower RMSE.
+\paragraph{Missing outcomes} For census tracts with missing Gini coefficients (approximately 5.5\% of the sample), I estimate them using a machine learning approach. Specifically, I train an XGBoost model using the following demographic predictors: dependency ratio (ratio of population under 18 and over 65 to working-age population), mean age, percentage of single-person households, logged mean equivalised income, mean household size, population size, and province fixed effects. Model performance is validated using a 5-fold cross-validation procedure, and is trained using default hyperparameters without grid search or additional tuning. For comparison, I also estimate a baseline OLS model using the same set of predictors. Out-of-sample prediction errors under both approaches are shown in Table \ref{perf}. Based on the cross-validation results, the XGBoost model demonstrates superior predictive performance compared to a baseline OLS model, as illustrated by a 6.5\% lower RMSE.
 
 \begin{table}[H]
 \centering
@@ -85,21 +91,20 @@ Relative improvement over OLS (\%) & 6.04\% & 6.55\% & 6.36\% \\
 }
 \end{table}
 
-
-\paragraph{Validation} To validate the log-normality assumption at the tract level, I compare observed distributional statistics with their theoretical counterparts under log-normality. For each tract $j$, I first recover the parameters of the theoretical log-normal distribution $(\nu_j, \sigma_j)$ using the observed mean income and Gini coefficient. Then, I calculate two key predicted statistics: the P80/P20 ratio and the median income. Under log-normality, these are given by:
+To validate the log-normality assumption at the tract level, I compare observed distributional statistics with their theoretical counterparts under log-normality. For each tract $j$, I recover $(\nu_j,\sigma_j)$ using the observed median and Gini coefficient. I then compute the following predicted statistics:
 
 \begin{equation}
-\text{P80/P20}_j = \exp(\sigma_j(\Phi^{-1}(0.8) - \Phi^{-1}(0.2)))
+\widehat{\text{Mean}}_j \;=\; \exp\!\left(\nu_j + \frac{\sigma_j^2}{2}\right),
 \end{equation}
 
 \begin{equation}
-\text{P50}_j = \exp(\nu_j)
+\widehat{\text{P80/P20}_j} \;=\; \exp\!\left(\sigma_j \,[\Phi^{-1}(0.8) - \Phi^{-1}(0.2)]\right).
 \end{equation}
 
-To assess the fit, I estimate OLS regressions of the form:
+To assess the fit, I estimate OLS regressions of the form
 
 \begin{equation}
-\hat{y}_j = \alpha + \beta y_j + \epsilon_j
+\hat{y}_j = \alpha + \beta\, y_j + \epsilon_j,
 \end{equation}
 
-where $\hat{y}_j$ is the predicted value under log-normality and $y_j$ is the observed value.
+where $\hat{y}_j$ is the predicted value under log-normality and $y_j$ is the observed value (either the tract mean income or the P80/P20 ratio).
