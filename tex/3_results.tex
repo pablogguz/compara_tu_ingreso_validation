@@ -1,26 +1,25 @@
 
 \paragraph{Validation} I begin by validating the log-normality assumption at the tract level. Figure \ref{fig:median} examines the fit for mean income, comparing observed values with those predicted under log-normality for each census tract, where observations are grouped into equal-sized bins using binscatter methods.\footnote{See \cite{cattaneo}.} The relationship is remarkably strong ($\beta$ = 0.99, $R^2$ = 0.99), with predicted values differing from observed ones by just 4.6\% on average. The near-unit slope coefficient and $R^2$ indicate that log-normality captures the central tendency of the income distribution particularly well.
 
-Figure \ref{fig:p80p20} shows the relationship for the P80/P20 ratio. The regression yields a slope coefficient of 0.77 ($R^2$ = 0.82), with predicted values deviating from observed ones by 5\% on average. Consistent with the fact that real income distributions tend to have heavier tails, the coefficient below unity suggests that the log-normal distribution slightly underestimates inequality.
+Figure \ref{fig:p80p20} shows the relationship for the P80/P20 ratio. The regression yields a slope coefficient of 0.77 ($R^2$ = 0.82), with predicted values deviating from observed ones by 4.8\% on average. Consistent with the fact that real income distributions tend to have heavier tails, the coefficient below unity suggests that the log-normal distribution slightly underestimates inequality.
 
 \begin{figure}[H]
 \begin{center}
 \captionsetup{justification=centering}
 \caption{Validation of log-normality: mean income}
 \label{fig:median}
-\includegraphics[width=0.8\textwidth]{output/binned_scatter_mean_2023.png}
+\includegraphics[width=0.7\textwidth]{output/binned_scatter_mean_2023.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure shows a binned scatter plot comparing observed mean income with predicted values under the log-normal assumption for each census tract. Source: Spanish Statistical Office and author's calculations.
 \end{fignotes2}
 \end{figure}
-
 \begin{figure}[H]
 \begin{center}
 \captionsetup{justification=centering}
 \caption{Validation of log-normality: P80/P20 ratio}
 \label{fig:p80p20}
-\includegraphics[width=0.8\textwidth]{output/binned_scatter_p80p20_2023.png}
+\includegraphics[width=0.7\textwidth]{output/binned_scatter_p80p20_2023.png}
 \end{center}
 \begin{fignotes2}
 \textbf{Notes:} This figure shows a binned scatter plot comparing observed P80/P20 ratios with predicted values under the log-normal assumption for each census tract. Source: Spanish Statistical Office and author's calculations.
@@ -62,7 +61,7 @@ Figure \ref{fig:p80p20} shows the relationship for the P80/P20 ratio. The regres
 \underbrace{\sum_{p \in c} w_p \big( \mu_{p} - \mu_{c} \big)^2}_{\text{Between-province}}
 \end{equation}
 
-where $\sigma^2_{j}$ is the variance of log income within each census tract $j$, $\mu_j$ is the mean log income in tract $j$, $\mu_k$ is the mean log income in municipality $k$, $\mu_p$ is the mean log income in province $p$, and  $\mu_{c}$ is the cross-tract mean log income within autonomous community $c$. Population weights for tracts, municipalities, and provinces, are denoted by $w_j, w_k, w_p$, respectively. The decomposition separates total income variation into four components: within-tract, between-tract (within municipalities), between-municipality (within provinces), and between-province variation. The within-tract component is calculated assuming log-normality within each tract.
+where $\sigma^2_{j}$ is the variance of log income within each census tract $j$, $\mu_j$ is the mean log income in tract $j$, $\mu_k$ is the mean log income in municipality $k$, $\mu_p$ is the mean log income in province $p$, and  $\mu_{c}$ is the cross-tract mean log income within autonomous community $c$. Population weights for tracts, municipalities, and provinces, are denoted by $w_j, w_k, w_p$, respectively. The decomposition separates total income variation into four components: within-tract, between-tract (within municipalities), between-municipality (within provinces), and between-province variation.
 
 Figure \ref{fig:variance_decomp} presents the results of this decomposition by autonomous community. The analysis reveals that within-tract variation accounts by far for the largest share of income inequality, representing around 80\% of total variance on average. This finding provides additional support for using tract-level distributional estimates as the fundamental building blocks for the aggregate distribution.\footnote{Notice that this does not contradict the earlier discussion on homogeneity in income-generating \textit{processes} within neighborhoods. The latter refers to the shared mechanisms (e.g., proportional shocks) influencing income trajectories within neighborhoods, but does not imply homogeneity in outcomes. Individual incomes can still vary significantly due to structural or stochastic factors.} A further 11\% is on average explained by between-tract, within-municipality differences. Income differences between municipalities and provinces contribute the remaining 9\%.\footnote{Extending the decomposition analysis at the national level shows that between-community income disparities only account for 5\% of total variance.}
 
@@ -76,6 +75,6 @@ Figure \ref{fig:variance_decomp} presents the results of this decomposition by a
 \includegraphics[width=0.85\textwidth]{output/variance_decomp_2023.png}
 \end{center}
 \begin{fignotes2}
-\textbf{Notes:} This figure shows the decomposition described in Equation \ref{decomp} whereby total variance in log income is broken down into four components: within-tract, between-tract (within municipality), between-municipality (within province), and between-province variation. The within-tract component is calculated assuming log-normality within tracts. Regions are ordered by total population. Source: Spanish Statistical Office and author's calculations.
+\textbf{Notes:} This figure shows the decomposition described in Equation \ref{decomp} whereby total variance in log income is broken down into four components: within-tract, between-tract (within municipality), between-municipality (within province), and between-province variation. Source: Spanish Statistical Office and author's calculations.
 \end{fignotes2}
 \end{figure}
