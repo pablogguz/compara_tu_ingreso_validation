@@ -186,7 +186,7 @@ plot_data <- variance_decomp %>%
   filter(ccaa_name != "Ceuta and Melilla")
 
 within_tract_order <- variance_decomp %>%
-  arrange(within_tract_share) %>%
+  arrange(desc(within_tract_share)) %>%
   pull(ccaa_name)
 
 p <- ggplot(plot_data,
