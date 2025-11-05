@@ -181,7 +181,9 @@ plot_data <- variance_decomp %>%
                  "Between provinces")
     )
   ) %>%
-  drop_na()
+  drop_na() %>%
+  # remove ceuta and melilla
+  filter(ccaa_name != "Ceuta and Melilla")
 
 within_tract_order <- variance_decomp %>%
   arrange(within_tract_share) %>%
@@ -204,8 +206,8 @@ p <- ggplot(plot_data,
     legend.justification = c(0, 1),
     legend.background = element_rect(fill = "white", color = NA),
     legend.margin = margin(t = 0, r = 10, b = 10, l = 0),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank()
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
   )
 
 ggsave("output/variance_decomp_2023.png", p, bg = "white", width = 10, height = 6)
